@@ -1,11 +1,11 @@
-package ru.coldwinternight.todo.controllers;
+package ru.coldwinternight.todo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.coldwinternight.todo.models.User;
-import ru.coldwinternight.todo.services.UserService;
+import ru.coldwinternight.todo.model.User;
+import ru.coldwinternight.todo.service.UserService;
 
 import java.util.List;
 

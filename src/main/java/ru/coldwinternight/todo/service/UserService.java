@@ -1,9 +1,9 @@
-package ru.coldwinternight.todo.services;
+package ru.coldwinternight.todo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.coldwinternight.todo.models.User;
-import ru.coldwinternight.todo.repositories.UserRepository;
+import ru.coldwinternight.todo.model.User;
+import ru.coldwinternight.todo.repository.UserRepository;
 
 import java.util.List;
 

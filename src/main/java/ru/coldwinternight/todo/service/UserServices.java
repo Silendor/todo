@@ -1,6 +1,6 @@
-package ru.coldwinternight.todo.services;
+package ru.coldwinternight.todo.service;
 
-import ru.coldwinternight.todo.models.User;
+import ru.coldwinternight.todo.model.User;
 
 import java.util.List;
 

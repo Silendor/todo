@@ -59,11 +59,6 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.3.4</version>
 		</dependency>
-		<dependency>
-			<groupId>com.github.ulisesbocchio</groupId>
-			<artifactId>jasypt-spring-boot-starter</artifactId>
-			<version>3.0.3</version>
-		</dependency>
 <!--		provided-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -84,11 +79,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.github.ulisesbocchio</groupId>
-				<artifactId>jasypt-maven-plugin</artifactId>
-				<version>3.0.3</version>
 			</plugin>
 		</plugins>
 	</build>
