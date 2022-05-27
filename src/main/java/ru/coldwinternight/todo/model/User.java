@@ -1,46 +1,30 @@
 package ru.coldwinternight.todo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
-import org.hibernate.annotations.Proxy;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import ru.coldwinternight.todo.entity.UserEntity;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
-@Table(name = "users")
-@Proxy(lazy = false)
-@JsonIgnoreProperties(ignoreUnknown = true, value = {
-        "new"
-})
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(callSuper = true, exclude = {"password"})
-public class User extends UserEntity {
-    @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user-seq")
-    @SequenceGenerator(name = "user-seq", sequenceName = "user_id_sequence", allocationSize = 1)
+public class User {
     private Integer id;
-
-    @Size(max = 200)
-    @Column(name = "username", nullable = false, unique = true)
     private String username;
-
-    @Email
-    @Size(max = 254)
-    @NotEmpty
-    @Column(name = "email", nullable = false)
     private String email;
+    private List<Note> notes;
+    private List<Directory> directories;
 
-    @Size(max = 50)
-    @NotEmpty
-    @Column(name = "password", nullable = false)
-    private String password;
-//    private String registerDate;
-
+    public static User toModel(UserEntity entity) {
+        return new User(
+                entity.getId(),
+                entity.getUsername(),
+                entity.getEmail(),
+                entity.getNotes().stream().map(Note::toModel).collect(Collectors.toList()),
+                entity.getDirectories().stream().map(Directory::toModel).collect(Collectors.toList())
+        );
+    }
 }

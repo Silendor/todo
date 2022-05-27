@@ -1,4 +1,4 @@
-package ru.coldwinternight.todo.model;
+package ru.coldwinternight.todo.entity;
 
 import lombok.*;
 import org.springframework.data.domain.Persistable;
@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public abstract class UserEntity implements Persistable<Integer> {
+public abstract class BaseEntity implements Persistable<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -44,7 +44,7 @@ public abstract class UserEntity implements Persistable<Integer> {
         if (obj == null || !getClass().equals(ProxyUtils.getUserClass(obj))) {
             return false;
         }
-        UserEntity that = (UserEntity) obj;
+        BaseEntity that = (BaseEntity) obj;
         return id != null && id.equals(that.id);
     }
 }
