@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/notes")
-public class NoteController {
+public class NoteController implements UniversalController {
     private final NoteService noteService;
 
     @Autowired
@@ -28,7 +28,8 @@ public class NoteController {
         try {
             if (userId == null)
                 throw new IllegalStateException("userid parameter expected");
-            List<Note> noteList = noteService.readAllByUser(userId);
+
+            List<Note> noteList = noteService.readAllByUserId(userId);
             return new ResponseEntity<>(noteList, HttpStatus.OK);
         } catch (UserNotFoundException | NoteNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -52,7 +53,8 @@ public class NoteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestParam(name = "userid", required = false) Integer userId, @Valid @RequestBody NoteEntity note) {
+    public ResponseEntity<?> create(@RequestParam(name = "userid", required = false) Integer userId,
+                                    @Valid @RequestBody NoteEntity note) {
         try {
             if (userId == null)
                 throw new IllegalStateException("userid parameter expected");

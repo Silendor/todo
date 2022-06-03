@@ -2,7 +2,6 @@ package ru.coldwinternight.todo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.List;

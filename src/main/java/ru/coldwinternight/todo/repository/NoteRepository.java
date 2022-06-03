@@ -7,13 +7,15 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.coldwinternight.todo.entity.NoteEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional(readOnly = true)
 public interface NoteRepository extends JpaRepository<NoteEntity, Integer> {
 
     // All notes by user
     @Query("SELECT n FROM NoteEntity n WHERE n.user.id = :userId")
-    List<NoteEntity> findAllByUser_Id(@Param("userId") int userId);
+    Optional<NoteEntity> findAllByUser_Id(@Param("userId") int userId);
+//    List<NoteEntity> findAllByUser_Id(@Param("userId") int userId);
 
     // Notes in directory
     List<NoteEntity> findAllByUser_IdAndDirectory_Id(int userId, int directoryId);

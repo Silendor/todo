@@ -1,7 +1,6 @@
 package ru.coldwinternight.todo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +13,11 @@ import ru.coldwinternight.todo.model.User;
 import ru.coldwinternight.todo.service.UserService;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class UserController implements UniversalController {
     private final UserService userService;
 
     @Autowired
@@ -54,6 +51,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody UserEntity user) {
+//    public ResponseEntity<?> create(@Valid @RequestBody BaseEntity user) {
         try {
             String successfullyCreatedMessage = "User created successfully";
             userService.create(user);
@@ -67,12 +65,18 @@ public class UserController {
 
     @PatchMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody UserEntity user) {
+//    public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody BaseEntity user) {
         try {
-            String updateMessage = "User successfully updated";
-            userService.update(user, id);
-            return new ResponseEntity<>(updateMessage, HttpStatus.OK);
-        } catch (UserNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            String anotherApiMessage = "Moved to another URL. Example:\r" +
+                    "PATCH todo/users/username\r" +
+                    "PATCH todo/users/email\r" +
+                    "PATCH todo/users/password";
+//            String updateMessage = "User successfully updated";
+//            userService.update(user, id);
+//            return new ResponseEntity<>(updateMessage, HttpStatus.OK);
+            return new ResponseEntity<>(anotherApiMessage, HttpStatus.NOT_MODIFIED);
+//        } catch (UserNotFoundException e) {
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (InvalidDataAccessApiUsageDirectoriesFromUsersApiException |
                 InvalidDataAccessApiUsageNotesFromUsersApiException e) {
             e.printStackTrace();

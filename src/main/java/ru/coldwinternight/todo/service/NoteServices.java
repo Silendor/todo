@@ -10,7 +10,7 @@ import java.util.List;
 public interface NoteServices {
     void create(NoteEntity note, int userId) throws UserNotFoundException;
 
-    List<Note> readAllByUser(int userId) throws NoteNotFoundException, UserNotFoundException;
+    List<Note> readAllByUserId(int userId) throws UserNotFoundException, NoteNotFoundException;
 
     void reverseCompletedStatus(int id) throws NoteNotFoundException;
 

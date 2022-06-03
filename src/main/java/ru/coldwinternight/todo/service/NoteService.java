@@ -12,6 +12,7 @@ import ru.coldwinternight.todo.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +57,7 @@ public class NoteService implements NoteServices{
 
     @Override
     @Transactional
-    public List<Note> readAllByUser(int userId) throws NoteNotFoundException, UserNotFoundException {
+    public List<Note> readAllByUserId(int userId) throws UserNotFoundException, NoteNotFoundException {
         userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
         return noteRepository.findAllByUser_Id(userId).stream().map(Note::toModel).collect(Collectors.toList());

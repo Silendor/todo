@@ -3,52 +3,68 @@ package ru.coldwinternight.todo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.coldwinternight.todo.entity.DirectoryEntity;
+import ru.coldwinternight.todo.entity.UserEntity;
+import ru.coldwinternight.todo.exception.DirectoryNotFoundException;
+import ru.coldwinternight.todo.exception.UserNotFoundException;
+import ru.coldwinternight.todo.model.Directory;
 import ru.coldwinternight.todo.repository.DirectoryRepository;
+import ru.coldwinternight.todo.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DirectoryService implements DirectoryServices {
 
-    private DirectoryRepository directoryRepository;
+    private final DirectoryRepository directoryRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public DirectoryService(DirectoryRepository directoryRepository) {
+    public DirectoryService(DirectoryRepository directoryRepository, UserRepository userRepository) {
         this.directoryRepository = directoryRepository;
+        this.userRepository = userRepository;
     }
 
-    @Override
-    public void create(DirectoryEntity directory) {
+    @Transactional
+    public void create(DirectoryEntity directory, int userId) throws UserNotFoundException {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        directory.setUser(user);
         directoryRepository.save(directory);
     }
 
     @Override
-    public List<DirectoryEntity> readAllForUser(int userId) {
+    @Transactional
+    public List<Directory> readAllByUserId(int userId) throws UserNotFoundException, DirectoryNotFoundException {
         // не реализовано
-        return null;
+        userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        return directoryRepository.findAllByUser_Id(userId).stream().map(Directory::toModel).collect(Collectors.toList());
     }
 
     @Override
-    public DirectoryEntity read(int id) {
-        return directoryRepository.getById(id);
+    @Transactional
+    public Directory read(int id) throws DirectoryNotFoundException {
+        DirectoryEntity directory = directoryRepository.findById(id)
+                .orElseThrow(DirectoryNotFoundException::new);
+        return Directory.toModel(directory);
     }
 
     @Override
-    public boolean update(DirectoryEntity directory, int id) {
-        if (directoryRepository.existsById(id)) {
-            directory.setId(id);
-            directoryRepository.save(directory);
-            return true;
-        }
-        return false;
+    @Transactional
+    public void update(DirectoryEntity directory, int id) throws DirectoryNotFoundException {
+        directoryRepository.findById(id)
+                .orElseThrow(DirectoryNotFoundException::new);
+        directory.setId(id);
+        directoryRepository.save(directory);
     }
 
     @Override
-    public boolean delete(int id) {
-        if (directoryRepository.existsById(id)) {
-            directoryRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    @Transactional
+    public void delete(int id) throws DirectoryNotFoundException {
+        directoryRepository.findById(id)
+                .orElseThrow(DirectoryNotFoundException::new);
+        directoryRepository.deleteById(id);
     }
 }

@@ -1,17 +1,20 @@
 package ru.coldwinternight.todo.service;
 
 import ru.coldwinternight.todo.entity.DirectoryEntity;
+import ru.coldwinternight.todo.exception.DirectoryNotFoundException;
+import ru.coldwinternight.todo.exception.UserNotFoundException;
+import ru.coldwinternight.todo.model.Directory;
 
 import java.util.List;
 
 public interface DirectoryServices {
-    void create(DirectoryEntity directory);
+    void create(DirectoryEntity directory, int userId) throws UserNotFoundException;
 
-    List<DirectoryEntity> readAllForUser(int userId);
+    List<Directory> readAllByUserId(int userId) throws UserNotFoundException, DirectoryNotFoundException;
 
-    DirectoryEntity read(int id);
+    Directory read(int id) throws DirectoryNotFoundException;
 
-    boolean update(DirectoryEntity directory, int id);
+    void update(DirectoryEntity directory, int id) throws DirectoryNotFoundException;
 
-    boolean delete(int id);
+    void delete(int id) throws DirectoryNotFoundException;
 }
