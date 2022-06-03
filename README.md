@@ -4,10 +4,10 @@ Test project for educational purposes
 API address:\
 https://todo.coldwinternight.ru/todo/
 
-##Section users: \
+## Section users: \
 https://todo.coldwinternight.ru/todo/users
 
-###Add new user: \
+### Add new user: \
 POST http://todo.coldwinternight.ru/todo/users \
 *awaits json*
 ```json
@@ -18,7 +18,7 @@ POST http://todo.coldwinternight.ru/todo/users \
 }
 ```
 
-###Edit user: \
+### Edit user: \
 PATCH http://todo.coldwinternight.ru/todo/users/{id} \
 *awaits json*
 ```json
@@ -29,20 +29,20 @@ PATCH http://todo.coldwinternight.ru/todo/users/{id} \
 }
 ```
 
-###Delete user: \
+### Delete user: \
 DELETE http://todo.coldwinternight.ru/todo/users/{id} \
 
 
-##Section notes: \
+## Section notes: \
 https://todo.coldwinternight.ru/todo/notes
 
-###All user notes:
+### All user notes:
 GET http://todo.coldwinternight.ru/todo/notes?userid={id}
 
-###Get one note by ID:
+### Get one note by ID:
 GET http://todo.coldwinternight.ru/todo/notes/{id}
 
-###Add new note for user by ID:
+### Add new note for user by ID:
 POST http://todo.coldwinternight.ru/todo/notes?userid={id} \
 *awaits json*
 ```json
@@ -55,10 +55,10 @@ POST http://todo.coldwinternight.ru/todo/notes?userid={id} \
 }
 ```
 
-###Reverse note status (completed/not completed):
+### Reverse note status (completed/not completed):
 PUT http://todo.coldwinternight.ru/todo/notes/{id}
 
-###Edit note:
+### Edit note:
 PATCH http://todo.coldwinternight.ru/todo/notes/{id}
 *awaits json*
 ```json
@@ -71,17 +71,17 @@ PATCH http://todo.coldwinternight.ru/todo/notes/{id}
 }
 ```
 
-###Delete note:
+### Delete note:
 DELETE http://todo.coldwinternight.ru/todo/notes/{id}
 
 
-##Section directories: \
+## Section directories: \
 https://todo.coldwinternight.ru/todo/directories
 
-###Get one directory by ID:
+### Get one directory by ID:
 GET http://todo.coldwinternight.ru/todo/directories/{id}
 
-###Add new directory for user by ID:
+### Add new directory for user by ID:
 POST http://todo.coldwinternight.ru/todo/directories?userid={id} \
 *awaits json*
 ```json
@@ -90,7 +90,7 @@ POST http://todo.coldwinternight.ru/todo/directories?userid={id} \
 }
 ```
 
-###Edit directory:
+### Edit directory:
 PATCH http://todo.coldwinternight.ru/todo/directories/{id} \
 *awaits json*
 ```json
