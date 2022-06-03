@@ -4,10 +4,10 @@ Test project for educational purposes
 API address:\
 https://todo.coldwinternight.ru/todo/
 
-## Section users: \
+## Section users:
 https://todo.coldwinternight.ru/todo/users
 
-### Add new user: \
+### Create new user:
 POST http://todo.coldwinternight.ru/todo/users \
 *awaits json*
 ```json
@@ -18,7 +18,7 @@ POST http://todo.coldwinternight.ru/todo/users \
 }
 ```
 
-### Edit user: \
+### Edit user:
 PATCH http://todo.coldwinternight.ru/todo/users/{id} \
 *awaits json*
 ```json
@@ -29,11 +29,11 @@ PATCH http://todo.coldwinternight.ru/todo/users/{id} \
 }
 ```
 
-### Delete user: \
+### Delete user:
 DELETE http://todo.coldwinternight.ru/todo/users/{id} \
 
 
-## Section notes: \
+## Section notes:
 https://todo.coldwinternight.ru/todo/notes
 
 ### All user notes:
@@ -42,7 +42,7 @@ GET http://todo.coldwinternight.ru/todo/notes?userid={id}
 ### Get one note by ID:
 GET http://todo.coldwinternight.ru/todo/notes/{id}
 
-### Add new note for user by ID:
+### Create new note for user by ID:
 POST http://todo.coldwinternight.ru/todo/notes?userid={id} \
 *awaits json*
 ```json
@@ -55,8 +55,8 @@ POST http://todo.coldwinternight.ru/todo/notes?userid={id} \
 }
 ```
 
-### Reverse note status (completed/not completed):
-PUT http://todo.coldwinternight.ru/todo/notes/{id}
+### ~~Reverse note status (completed/not completed)~~:
+~~PUT http://todo.coldwinternight.ru/todo/notes/{id}~~
 
 ### Edit note:
 PATCH http://todo.coldwinternight.ru/todo/notes/{id}
@@ -75,13 +75,13 @@ PATCH http://todo.coldwinternight.ru/todo/notes/{id}
 DELETE http://todo.coldwinternight.ru/todo/notes/{id}
 
 
-## Section directories: \
+## Section directories:
 https://todo.coldwinternight.ru/todo/directories
 
 ### Get one directory by ID:
 GET http://todo.coldwinternight.ru/todo/directories/{id}
 
-### Add new directory for user by ID:
+### Create a new directory for user by ID:
 POST http://todo.coldwinternight.ru/todo/directories?userid={id} \
 *awaits json*
 ```json
@@ -99,5 +99,5 @@ PATCH http://todo.coldwinternight.ru/todo/directories/{id} \
 }
 ```
 
-###Delete directory:
+### Delete a directory:
 DELETE http://todo.coldwinternight.ru/todo/directories/{id}
