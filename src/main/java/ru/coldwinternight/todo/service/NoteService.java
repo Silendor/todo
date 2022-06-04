@@ -12,7 +12,6 @@ import ru.coldwinternight.todo.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +40,7 @@ public class NoteService implements NoteServices{
     public void reverseCompletedStatus(int id) throws NoteNotFoundException {
         NoteEntity note = noteRepository.findById(id)
                 .orElseThrow(NoteNotFoundException::new);
-        note.setCompleted(true);
+        note.setCompleted(!note.isCompleted());
         noteRepository.save(note);
     }
 
