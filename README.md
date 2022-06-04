@@ -55,8 +55,8 @@ POST http://todo.coldwinternight.ru/todo/notes?userid={id} \
 }
 ```
 
-### ~~Reverse note status (completed/not completed)~~:
-~~PUT http://todo.coldwinternight.ru/todo/notes/{id}~~
+### Reverse note status (completed/not completed):
+PUT http://todo.coldwinternight.ru/todo/notes/{id}
 
 ### Edit note:
 PATCH http://todo.coldwinternight.ru/todo/notes/{id}
