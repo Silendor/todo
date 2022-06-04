@@ -10,6 +10,8 @@ import ru.coldwinternight.todo.exception.UserNotFoundException;
 import ru.coldwinternight.todo.model.User;
 import ru.coldwinternight.todo.repository.UserRepository;
 
+import javax.persistence.EntityManager;
+import javax.swing.text.html.parser.Entity;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;

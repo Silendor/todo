@@ -28,7 +28,6 @@ public class DirectoryEntity extends BaseEntity{
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "directory")
+    @OneToMany(mappedBy = "directory", cascade = { CascadeType.MERGE})
     private List<NoteEntity> notes;
-
 }

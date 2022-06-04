@@ -65,21 +65,19 @@ public class UserController implements UniversalController {
 
     @PatchMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody UserEntity user) {
-//    public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody BaseEntity user) {
         try {
-            String anotherApiMessage = "Moved to another URL. Example:\r" +
-                    "PATCH todo/users/username\r" +
-                    "PATCH todo/users/email\r" +
-                    "PATCH todo/users/password";
-//            String updateMessage = "User successfully updated";
-//            userService.update(user, id);
-//            return new ResponseEntity<>(updateMessage, HttpStatus.OK);
-            return new ResponseEntity<>(anotherApiMessage, HttpStatus.NOT_MODIFIED);
-//        } catch (UserNotFoundException e) {
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+//            String anotherApiMessage = "Moved to another URL. Example:\r" +
+//                    "PATCH todo/users/username\r" +
+//                    "PATCH todo/users/email\r" +
+//                    "PATCH todo/users/password";
+//            return new ResponseEntity<>(anotherApiMessage, HttpStatus.NOT_MODIFIED);
+            String updateMessage = "User successfully updated";
+            userService.update(user, id);
+            return new ResponseEntity<>(updateMessage, HttpStatus.OK);
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (InvalidDataAccessApiUsageDirectoriesFromUsersApiException |
                 InvalidDataAccessApiUsageNotesFromUsersApiException e) {
-            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             e.printStackTrace();

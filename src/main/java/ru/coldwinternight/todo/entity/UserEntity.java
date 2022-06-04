@@ -40,9 +40,9 @@ public class UserEntity extends BaseEntity {
 //    private Date registerDate;
 //    private Date lastLogin;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.MERGE})
     private List<NoteEntity> notes;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.MERGE})
     private List<DirectoryEntity> directories;
 }
