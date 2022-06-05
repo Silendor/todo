@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class DirectoryService implements DirectoryServices {
 
     private final DirectoryRepository directoryRepository;
@@ -35,7 +36,6 @@ public class DirectoryService implements DirectoryServices {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Directory> readAllByUserId(int userId) throws UserNotFoundException, DirectoryNotFoundException {
         // не реализовано
         userRepository.findById(userId)
@@ -44,7 +44,6 @@ public class DirectoryService implements DirectoryServices {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Directory read(int id) throws DirectoryNotFoundException {
         DirectoryEntity directory = directoryRepository.findById(id)
                 .orElseThrow(DirectoryNotFoundException::new);

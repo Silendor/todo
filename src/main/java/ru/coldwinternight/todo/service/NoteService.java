@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class NoteService implements NoteServices{
 
     private final NoteRepository noteRepository;
@@ -45,7 +46,6 @@ public class NoteService implements NoteServices{
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Note read(int id) throws NoteNotFoundException {
         NoteEntity noteEntity = noteRepository.findById(id)
                 .orElseThrow(NoteNotFoundException::new);
@@ -55,7 +55,6 @@ public class NoteService implements NoteServices{
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Note> readAllByUserId(int userId) throws UserNotFoundException, NoteNotFoundException {
         userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
@@ -77,6 +76,7 @@ public class NoteService implements NoteServices{
         noteRepository.findById(id)
                 .orElseThrow(NoteNotFoundException::new);
         noteRepository.deleteById(id);
+//        noteRepository.deleteNoteById(id);
 //        if (noteRepository.findById(id).isPresent())
 //            try {
 //                throw new Exception("not deleted");

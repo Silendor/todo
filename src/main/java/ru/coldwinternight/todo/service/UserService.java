@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class UserService implements UserServices {
 
     private final UserRepository userRepository;
@@ -36,7 +37,6 @@ public class UserService implements UserServices {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<User> readAll() throws UserNotFoundException {
         if (userRepository.findAll().isEmpty()) {
             throw new UserNotFoundException();
@@ -45,7 +45,6 @@ public class UserService implements UserServices {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User read(int id) throws UserNotFoundException {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
