@@ -51,7 +51,6 @@ public class UserController implements UniversalController {
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody UserEntity user) {
-//    public ResponseEntity<?> create(@Valid @RequestBody BaseEntity user) {
         try {
             String successfullyCreatedMessage = "User created successfully";
             userService.create(user);
