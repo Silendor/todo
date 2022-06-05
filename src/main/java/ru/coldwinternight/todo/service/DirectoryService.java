@@ -2,6 +2,7 @@ package ru.coldwinternight.todo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.coldwinternight.todo.entity.DirectoryEntity;
 import ru.coldwinternight.todo.entity.UserEntity;
 import ru.coldwinternight.todo.exception.DirectoryNotFoundException;
@@ -10,7 +11,6 @@ import ru.coldwinternight.todo.model.Directory;
 import ru.coldwinternight.todo.repository.DirectoryRepository;
 import ru.coldwinternight.todo.repository.UserRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +35,7 @@ public class DirectoryService implements DirectoryServices {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Directory> readAllByUserId(int userId) throws UserNotFoundException, DirectoryNotFoundException {
         // не реализовано
         userRepository.findById(userId)
@@ -44,7 +44,7 @@ public class DirectoryService implements DirectoryServices {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Directory read(int id) throws DirectoryNotFoundException {
         DirectoryEntity directory = directoryRepository.findById(id)
                 .orElseThrow(DirectoryNotFoundException::new);

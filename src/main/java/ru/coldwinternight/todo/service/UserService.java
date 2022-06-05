@@ -2,6 +2,7 @@ package ru.coldwinternight.todo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.coldwinternight.todo.exception.InvalidDataAccessApiUsageDirectoriesFromUsersApiException;
 import ru.coldwinternight.todo.exception.InvalidDataAccessApiUsageNotesFromUsersApiException;
 import ru.coldwinternight.todo.exception.UserAlreadyExistException;
@@ -10,9 +11,6 @@ import ru.coldwinternight.todo.exception.UserNotFoundException;
 import ru.coldwinternight.todo.model.User;
 import ru.coldwinternight.todo.repository.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.swing.text.html.parser.Entity;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +36,7 @@ public class UserService implements UserServices {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User> readAll() throws UserNotFoundException {
         if (userRepository.findAll().isEmpty()) {
             throw new UserNotFoundException();
@@ -47,7 +45,7 @@ public class UserService implements UserServices {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public User read(int id) throws UserNotFoundException {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);

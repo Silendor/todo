@@ -2,6 +2,7 @@ package ru.coldwinternight.todo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.coldwinternight.todo.entity.NoteEntity;
 import ru.coldwinternight.todo.entity.UserEntity;
 import ru.coldwinternight.todo.exception.NoteNotFoundException;
@@ -10,7 +11,6 @@ import ru.coldwinternight.todo.model.Note;
 import ru.coldwinternight.todo.repository.NoteRepository;
 import ru.coldwinternight.todo.repository.UserRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +45,7 @@ public class NoteService implements NoteServices{
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Note read(int id) throws NoteNotFoundException {
         NoteEntity noteEntity = noteRepository.findById(id)
                 .orElseThrow(NoteNotFoundException::new);
@@ -55,7 +55,7 @@ public class NoteService implements NoteServices{
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Note> readAllByUserId(int userId) throws UserNotFoundException, NoteNotFoundException {
         userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
@@ -77,5 +77,11 @@ public class NoteService implements NoteServices{
         noteRepository.findById(id)
                 .orElseThrow(NoteNotFoundException::new);
         noteRepository.deleteById(id);
+//        if (noteRepository.findById(id).isPresent())
+//            try {
+//                throw new Exception("not deleted");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
     }
 }
