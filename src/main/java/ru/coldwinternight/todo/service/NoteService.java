@@ -49,8 +49,6 @@ public class NoteService implements NoteServices{
     public Note read(int id) throws NoteNotFoundException {
         NoteEntity noteEntity = noteRepository.findById(id)
                 .orElseThrow(NoteNotFoundException::new);
-        if (noteEntity.getDirectory() != null)
-            return  Note.toModelWithDirectory(noteEntity);
         return Note.toModel(noteEntity);
     }
 
@@ -76,12 +74,5 @@ public class NoteService implements NoteServices{
         noteRepository.findById(id)
                 .orElseThrow(NoteNotFoundException::new);
         noteRepository.deleteById(id);
-//        noteRepository.deleteNoteById(id);
-//        if (noteRepository.findById(id).isPresent())
-//            try {
-//                throw new Exception("not deleted");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
     }
 }
