@@ -20,11 +20,11 @@ public class NoteEntity extends BaseEntity{
     @SequenceGenerator(name = "note-seq", sequenceName = "note_id_seq", allocationSize = 1)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", updatable = false, nullable = false)
     private UserEntity user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "directory_id")
     private DirectoryEntity directory;
 
