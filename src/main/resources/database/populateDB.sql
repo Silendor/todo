@@ -6,5 +6,5 @@ INSERT INTO directories VALUES
 INSERT INTO notes VALUES
 (1, 1, 1, 'test note 1 user1', 'title 1', false),
 (2, 1, 1, 'test note 2 user1', 'title 2', false),
-(3, 2, 1, 'test note 1 user2', 'my first title', false),
+(3, 2, NULL, 'test note 1 user2', 'my first title', false),
 (4, 1, 1, 'test note 3 user1', 'title 3', false);
