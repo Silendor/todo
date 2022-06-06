@@ -1,7 +1,6 @@
 package ru.coldwinternight.todo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.coldwinternight.todo.entity.NoteEntity;
@@ -24,8 +23,4 @@ public interface NoteRepository extends JpaRepository<NoteEntity, Integer> {
 
     // Not completed
     List<NoteEntity> findAllByUser_IdAndCompletedIsFalse(int userId);
-
-    @Modifying
-    @Query("DELETE FROM NoteEntity n WHERE n.id = :id")
-    void deleteNoteById(@Param("id") int id);
 }
