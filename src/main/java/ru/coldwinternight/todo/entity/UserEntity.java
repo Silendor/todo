@@ -23,12 +23,13 @@ public class UserEntity extends BaseEntity {
     private Integer id;
 
 //    @Size(max = 200)
-    @Column(nullable = false)
+//    @Column(nullable = false)
+    @Column
     private String username;
 
-    @Email
 //    @Size(max = 254)
 //    @NotEmpty
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -40,9 +41,9 @@ public class UserEntity extends BaseEntity {
 //    private Date registerDate;
 //    private Date lastLogin;
 
-    @OneToMany(mappedBy = "user", cascade = { CascadeType.MERGE})
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE)
     private List<NoteEntity> notes;
 
-    @OneToMany(mappedBy = "user", cascade = { CascadeType.MERGE})
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE)
     private List<DirectoryEntity> directories;
 }
