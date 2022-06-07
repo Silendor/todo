@@ -21,13 +21,13 @@ public class DirectoryEntity extends BaseEntity{
     @SequenceGenerator(name = "directory-seq", sequenceName = "directory_id_seq", allocationSize = 1)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "directory", cascade = { CascadeType.MERGE})
+    @OneToMany(mappedBy = "directory", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE)
     private List<NoteEntity> notes;
 }
