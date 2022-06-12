@@ -38,7 +38,6 @@ public interface UserServices {
     /**
      * Deletes user by id
      * @param id - id of user to be deleted
-     * @return - true if user was deleted and false otherwise
      */
     void delete(int id) throws UserNotFoundException;
 }

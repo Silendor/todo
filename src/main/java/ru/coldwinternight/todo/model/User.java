@@ -15,16 +15,18 @@ public class User {
     private Integer id;
     private String username;
     private String email;
-    private List<Note> notes;
-    private List<Directory> directories;
+    private Integer today_amount;
+    private boolean randomize_today_tasks;
+    private List<Task> tasks;
 
     public static User toModel(UserEntity entity) {
         return new User(
                 entity.getId(),
                 entity.getUsername(),
                 entity.getEmail(),
-                entity.getNotes().stream().map(Note::toModel).collect(Collectors.toList()),
-                entity.getDirectories().stream().map(Directory::toModel).collect(Collectors.toList())
+                entity.getToday_amount(),
+                entity.isRandomize_today_tasks(),
+                entity.getTasks().stream().map(Task::toModel).collect(Collectors.toList())
         );
     }
 }

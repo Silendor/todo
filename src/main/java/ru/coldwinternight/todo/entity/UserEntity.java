@@ -23,7 +23,6 @@ public class UserEntity extends BaseEntity {
     private Integer id;
 
 //    @Size(max = 200)
-//    @Column(nullable = false)
     @Column
     private String username;
 
@@ -38,12 +37,16 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false, columnDefinition = "integer default 3")
+    private Integer today_amount;
+
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean randomize_today_tasks;
+
 //    private Date registerDate;
 //    private Date lastLogin;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE)
-    private List<NoteEntity> notes;
+    private List<TaskEntity> tasks;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.REMOVE)
-    private List<DirectoryEntity> directories;
 }

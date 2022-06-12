@@ -39,39 +39,39 @@ https://todo.coldwinternight.ru/todo/notes
 ### All user notes:
 GET http://todo.coldwinternight.ru/todo/notes?userid={id}
 
-### Get one note by ID:
+### Get one task by ID:
 GET http://todo.coldwinternight.ru/todo/notes/{id}
 
-### Create new note for user by ID:
+### Create new task for user by ID:
 POST http://todo.coldwinternight.ru/todo/notes?userid={id} \
 *awaits json*
 ```json
 {
     "user_id": 2,
     "directory_id": null,
-    "note": "test todo",
+    "task": "test todo",
     "title": "test title",
     "completed": false
 }
 ```
 
-### Reverse note status (completed/not completed):
+### Reverse task status (completed/not completed):
 PUT http://todo.coldwinternight.ru/todo/notes/{id}
 
-### Edit note:
+### Edit task:
 PATCH http://todo.coldwinternight.ru/todo/notes/{id}
 *awaits json*
 ```json
 {
     "user_id": 2,
     "directory_id": null,
-    "note": "test todo",
+    "task": "test todo",
     "title": "test title",
     "completed": false
 }
 ```
 
-### Delete note:
+### Delete task:
 DELETE http://todo.coldwinternight.ru/todo/notes/{id}
 
 

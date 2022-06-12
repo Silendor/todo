@@ -3,8 +3,7 @@ package ru.coldwinternight.todo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.coldwinternight.todo.exception.InvalidDataAccessApiUsageDirectoriesFromUsersApiException;
-import ru.coldwinternight.todo.exception.InvalidDataAccessApiUsageNotesFromUsersApiException;
+import ru.coldwinternight.todo.exception.InvalidDataAccessApiUsageTasksFromUsersApiException;
 import ru.coldwinternight.todo.exception.UserAlreadyExistException;
 import ru.coldwinternight.todo.entity.UserEntity;
 import ru.coldwinternight.todo.exception.UserNotFoundException;
@@ -56,10 +55,8 @@ public class UserService implements UserServices {
     public void update(UserEntity user, int id) throws UserNotFoundException {
         userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
-        if (user.getNotes() != null)
-            throw new InvalidDataAccessApiUsageNotesFromUsersApiException();
-        if (user.getDirectories() != null)
-            throw new InvalidDataAccessApiUsageDirectoriesFromUsersApiException();
+        if (user.getTasks() != null)
+            throw new InvalidDataAccessApiUsageTasksFromUsersApiException();
         user.setId(id);
         userRepository.save(user);
     }

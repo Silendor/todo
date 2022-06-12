@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.coldwinternight.todo.exception.InvalidDataAccessApiUsageDirectoriesFromUsersApiException;
-import ru.coldwinternight.todo.exception.InvalidDataAccessApiUsageNotesFromUsersApiException;
 import ru.coldwinternight.todo.exception.UserAlreadyExistException;
 import ru.coldwinternight.todo.entity.UserEntity;
 import ru.coldwinternight.todo.exception.UserNotFoundException;
@@ -68,19 +66,11 @@ public class UserController implements UniversalController {
     @PatchMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody UserEntity user) {
         try {
-//            String anotherApiMessage = "Moved to another URL. Example:\r" +
-//                    "PATCH todo/users/username\r" +
-//                    "PATCH todo/users/email\r" +
-//                    "PATCH todo/users/password";
-//            return new ResponseEntity<>(anotherApiMessage, HttpStatus.NOT_MODIFIED);
             String updateMessage = "User successfully updated";
             userService.update(user, id);
             return new ResponseEntity<>(updateMessage, HttpStatus.OK);
         } catch (UserNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (InvalidDataAccessApiUsageDirectoriesFromUsersApiException |
-                InvalidDataAccessApiUsageNotesFromUsersApiException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);

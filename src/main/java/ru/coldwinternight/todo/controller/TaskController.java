@@ -4,23 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.coldwinternight.todo.entity.NoteEntity;
-import ru.coldwinternight.todo.exception.NoteNotFoundException;
+import ru.coldwinternight.todo.entity.TaskEntity;
+import ru.coldwinternight.todo.exception.TaskNotFoundException;
 import ru.coldwinternight.todo.exception.UserNotFoundException;
-import ru.coldwinternight.todo.model.Note;
-import ru.coldwinternight.todo.service.NoteService;
+import ru.coldwinternight.todo.model.Task;
+import ru.coldwinternight.todo.service.TaskService;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/notes")
-public class NoteController implements UniversalController {
-    private final NoteService noteService;
+@RequestMapping("/tasks")
+public class TaskController implements UniversalController {
+    private final TaskService taskService;
 
     @Autowired
-    public NoteController(NoteService noteService) {
-        this.noteService = noteService;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @GetMapping
@@ -29,9 +29,9 @@ public class NoteController implements UniversalController {
             if (userId == null)
                 throw new IllegalStateException("userid parameter expected");
 
-            List<Note> noteList = noteService.readAllByUserId(userId);
-            return new ResponseEntity<>(noteList, HttpStatus.OK);
-        } catch (UserNotFoundException | NoteNotFoundException e) {
+            List<Task> taskList = taskService.readAllByUserId(userId);
+            return new ResponseEntity<>(taskList, HttpStatus.OK);
+        } catch (UserNotFoundException | TaskNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (IllegalStateException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -44,9 +44,9 @@ public class NoteController implements UniversalController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> showById(@PathVariable(name = "id") int id) {
         try {
-            Note note = noteService.read(id);
-            return new ResponseEntity<>(note, HttpStatus.OK);
-        } catch (NoteNotFoundException e) {
+            Task task = taskService.read(id);
+            return new ResponseEntity<>(task, HttpStatus.OK);
+        } catch (TaskNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,13 +56,13 @@ public class NoteController implements UniversalController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestParam(name = "userid", required = false) Integer userId,
-                                    @Valid @RequestBody NoteEntity note) {
+                                    @Valid @RequestBody TaskEntity task) {
         try {
             if (userId == null)
                 throw new IllegalStateException("userid parameter expected");
 
-            String successfullyCreatedMessage = "Note created successfully";
-            noteService.create(note, userId);
+            String successfullyCreatedMessage = "Task created successfully";
+            taskService.create(task, userId);
             return new ResponseEntity<>(successfullyCreatedMessage, HttpStatus.CREATED);
         } catch (UserNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -77,10 +77,10 @@ public class NoteController implements UniversalController {
     @PutMapping("/{id}")
     public ResponseEntity<?> reverseCompletedStatus(@PathVariable(name = "id") int id) {
         try {
-            String statusReverseMessage = "The note status has reversed";
-            noteService.reverseCompletedStatus(id);
+            String statusReverseMessage = "The task status has reversed";
+            taskService.reverseCompletedStatus(id);
             return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
-        } catch (NoteNotFoundException e) {
+        } catch (TaskNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,12 +89,12 @@ public class NoteController implements UniversalController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody NoteEntity note) {
+    public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody TaskEntity task) {
         try {
-            String updateMessage = "Note successfully updated";
-            noteService.update(note, id);
+            String updateMessage = "Task successfully updated";
+            taskService.update(task, id);
             return new ResponseEntity<>(updateMessage, HttpStatus.OK);
-        } catch (NoteNotFoundException e) {
+        } catch (TaskNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,10 +105,10 @@ public class NoteController implements UniversalController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
         try {
-            String deleteMessage = "Note successfully deleted";
-            noteService.delete(id);
+            String deleteMessage = "Task successfully deleted";
+            taskService.delete(id);
             return new ResponseEntity<>(deleteMessage, HttpStatus.OK);
-        } catch (NoteNotFoundException e) {
+        } catch (TaskNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();

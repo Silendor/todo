@@ -9,31 +9,30 @@ import javax.persistence.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@Table(name = "notes")
+@Table(name = "tasks")
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"new"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class NoteEntity extends BaseEntity{
+public class TaskEntity extends BaseEntity{
     @Id
     @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "note-seq")
-    @SequenceGenerator(name = "note-seq", sequenceName = "note_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task-seq")
+    @SequenceGenerator(name = "task-seq", sequenceName = "task_id_seq", allocationSize = 1)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
     private UserEntity user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "directory_id")
-    private DirectoryEntity directory;
-
-    @Column(nullable = false)
-    private String note;
-
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
+    private String task_body;
+
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean completed;
+
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean today;
 }
