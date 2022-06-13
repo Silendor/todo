@@ -1,6 +1,7 @@
 package ru.coldwinternight.todo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.coldwinternight.todo.entity.UserEntity;
@@ -15,4 +16,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     // By Username
     List<UserEntity> findByUsername(String username);
+
+    @Modifying
+    @Query("UPDATE UserEntity u SET u.password = :password WHERE u.id = :id")
+    void updatePassword(@Param(value = "password") String password, @Param(value = "id") int id);
 }

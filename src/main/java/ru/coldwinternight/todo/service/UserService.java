@@ -3,6 +3,7 @@ package ru.coldwinternight.todo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.coldwinternight.todo.exception.IncorrectPasswordException;
 import ru.coldwinternight.todo.exception.InvalidDataAccessApiUsageTasksFromUsersApiException;
 import ru.coldwinternight.todo.exception.UserAlreadyExistException;
 import ru.coldwinternight.todo.entity.UserEntity;
@@ -27,7 +28,6 @@ public class UserService implements UserServices {
     @Override
     @Transactional
     public void create(UserEntity user) throws UserAlreadyExistException {
-//        if (userRepository.findByUsername(user.getUsername()) != null) {
         if (userRepository.findByEmailIgnoreCase(user.getEmail()).isPresent()) {
             String userExistMessage = "User with this email already exists";
             throw new UserAlreadyExistException(userExistMessage);
@@ -59,6 +59,18 @@ public class UserService implements UserServices {
             throw new InvalidDataAccessApiUsageTasksFromUsersApiException();
         user.setId(id);
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void updatePassword(String oldPassword, String newPassword, int id)
+            throws UserNotFoundException, IncorrectPasswordException {
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+
+        if (!oldPassword.equals(user.getPassword()))
+            throw new IncorrectPasswordException("Incorrect old password.");
+
+        userRepository.updatePassword(newPassword, id);
     }
 
     @Override

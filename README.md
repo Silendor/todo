@@ -49,6 +49,16 @@ or
 }
 ```
 
+### Edit password:
+PATCH https://todo.coldwinternight.ru/todo/users/{id}/password \
+*awaits json*
+```json
+{
+  "oldpassword": "actual password",
+  "newpassword": "new password"
+}
+```
+
 ### Delete user:
 DELETE https://todo.coldwinternight.ru/todo/users/{id} \
 
