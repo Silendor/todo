@@ -12,9 +12,19 @@ POST https://todo.coldwinternight.ru/todo/users \
 *awaits json*
 ```json
 {
-"username": "Matt2",
-"email": "mattuser2@mail.com",
-"password": "123mattpass2"
+  "username": "Matt2",
+  "email": "mattuser2@mail.com",
+  "password": "123mattpass2",
+  "today_amount": 3,
+  "randomize_today_tasks": false
+}
+```
+or
+```json
+{
+  "username": "Matt2",
+  "email": "mattuser2@mail.com",
+  "password": "123mattpass2"
 }
 ```
 
@@ -23,9 +33,19 @@ PATCH https://todo.coldwinternight.ru/todo/users/{id} \
 *awaits json*
 ```json
 {
-"username": "Matt2",
-"email": "mattuser2@mail.com",
-"password": "123mattpass2"
+  "username": "Matt2",
+  "email": "mattuser2@mail.com",
+  "password": "123mattpass2",
+  "today_amount": 3,
+  "randomize_today_tasks": false
+}
+```
+or
+```json
+{
+  "username": "Matt2",
+  "email": "mattuser2@mail.com",
+  "password": "123mattpass2"
 }
 ```
 
@@ -47,11 +67,19 @@ POST https://todo.coldwinternight.ru/todo/tasks?userid={id} \
 *awaits json*
 ```json
 {
-    "user_id": 2,
-    "directory_id": null,
-    "task": "test todo",
-    "title": "test title",
-    "completed": false
+  "user_id": 2,
+  "title": "test title",
+  "task_body": "test todo",
+  "completed": false,
+  "today": false
+}
+```
+or
+```json
+{
+  "user_id": 2,
+  "title": "test title",
+  "task_body": "test todo"
 }
 ```
 
@@ -63,11 +91,19 @@ PATCH https://todo.coldwinternight.ru/todo/tasks/{id}
 *awaits json*
 ```json
 {
-    "user_id": 2,
-    "directory_id": null,
-    "task": "test todo",
-    "title": "test title",
-    "completed": false
+  "user_id": 2,
+  "title": "test title",
+  "task_body": "test todo",
+  "completed": false,
+  "today": false
+}
+```
+or
+```json
+{
+  "user_id": 2,
+  "title": "test title",
+  "task_body": "test todo"
 }
 ```
 
