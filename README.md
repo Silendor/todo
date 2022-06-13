@@ -33,17 +33,17 @@ PATCH http://todo.coldwinternight.ru/todo/users/{id} \
 DELETE http://todo.coldwinternight.ru/todo/users/{id} \
 
 
-## Section notes:
-https://todo.coldwinternight.ru/todo/notes
+## Section tasks:
+https://todo.coldwinternight.ru/todo/tasks
 
-### All user notes:
-GET http://todo.coldwinternight.ru/todo/notes?userid={id}
+### All user tasks:
+GET http://todo.coldwinternight.ru/todo/tasks?userid={id}
 
 ### Get one task by ID:
-GET http://todo.coldwinternight.ru/todo/notes/{id}
+GET http://todo.coldwinternight.ru/todo/tasks/{id}
 
 ### Create new task for user by ID:
-POST http://todo.coldwinternight.ru/todo/notes?userid={id} \
+POST http://todo.coldwinternight.ru/todo/tasks?userid={id} \
 *awaits json*
 ```json
 {
@@ -56,10 +56,10 @@ POST http://todo.coldwinternight.ru/todo/notes?userid={id} \
 ```
 
 ### Reverse task status (completed/not completed):
-PUT http://todo.coldwinternight.ru/todo/notes/{id}
+PUT http://todo.coldwinternight.ru/todo/tasks/{id}
 
 ### Edit task:
-PATCH http://todo.coldwinternight.ru/todo/notes/{id}
+PATCH http://todo.coldwinternight.ru/todo/tasks/{id}
 *awaits json*
 ```json
 {
@@ -72,32 +72,4 @@ PATCH http://todo.coldwinternight.ru/todo/notes/{id}
 ```
 
 ### Delete task:
-DELETE http://todo.coldwinternight.ru/todo/notes/{id}
-
-
-## Section directories:
-https://todo.coldwinternight.ru/todo/directories
-
-### Get one directory by ID:
-GET http://todo.coldwinternight.ru/todo/directories/{id}
-
-### Create a new directory for user by ID:
-POST http://todo.coldwinternight.ru/todo/directories?userid={id} \
-*awaits json*
-```json
-{
-    "name": "new dir"
-}
-```
-
-### Edit directory:
-PATCH http://todo.coldwinternight.ru/todo/directories/{id} \
-*awaits json*
-```json
-{
-    "name": "edited dir"
-}
-```
-
-### Delete a directory:
-DELETE http://todo.coldwinternight.ru/todo/directories/{id}
+DELETE http://todo.coldwinternight.ru/todo/tasks/{id}
