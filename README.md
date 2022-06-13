@@ -8,7 +8,7 @@ https://todo.coldwinternight.ru/todo/
 https://todo.coldwinternight.ru/todo/users
 
 ### Create new user:
-POST http://todo.coldwinternight.ru/todo/users \
+POST https://todo.coldwinternight.ru/todo/users \
 *awaits json*
 ```json
 {
@@ -19,7 +19,7 @@ POST http://todo.coldwinternight.ru/todo/users \
 ```
 
 ### Edit user:
-PATCH http://todo.coldwinternight.ru/todo/users/{id} \
+PATCH https://todo.coldwinternight.ru/todo/users/{id} \
 *awaits json*
 ```json
 {
@@ -30,20 +30,20 @@ PATCH http://todo.coldwinternight.ru/todo/users/{id} \
 ```
 
 ### Delete user:
-DELETE http://todo.coldwinternight.ru/todo/users/{id} \
+DELETE https://todo.coldwinternight.ru/todo/users/{id} \
 
 
 ## Section tasks:
 https://todo.coldwinternight.ru/todo/tasks
 
 ### All user tasks:
-GET http://todo.coldwinternight.ru/todo/tasks?userid={id}
+GET https://todo.coldwinternight.ru/todo/tasks?userid={id}
 
 ### Get one task by ID:
-GET http://todo.coldwinternight.ru/todo/tasks/{id}
+GET https://todo.coldwinternight.ru/todo/tasks/{id}
 
 ### Create new task for user by ID:
-POST http://todo.coldwinternight.ru/todo/tasks?userid={id} \
+POST https://todo.coldwinternight.ru/todo/tasks?userid={id} \
 *awaits json*
 ```json
 {
@@ -56,10 +56,10 @@ POST http://todo.coldwinternight.ru/todo/tasks?userid={id} \
 ```
 
 ### Reverse task status (completed/not completed):
-PUT http://todo.coldwinternight.ru/todo/tasks/{id}
+PUT https://todo.coldwinternight.ru/todo/tasks/{id}
 
 ### Edit task:
-PATCH http://todo.coldwinternight.ru/todo/tasks/{id}
+PATCH https://todo.coldwinternight.ru/todo/tasks/{id}
 *awaits json*
 ```json
 {
@@ -72,4 +72,4 @@ PATCH http://todo.coldwinternight.ru/todo/tasks/{id}
 ```
 
 ### Delete task:
-DELETE http://todo.coldwinternight.ru/todo/tasks/{id}
+DELETE https://todo.coldwinternight.ru/todo/tasks/{id}
