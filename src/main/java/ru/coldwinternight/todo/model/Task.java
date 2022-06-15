@@ -11,11 +11,11 @@ import ru.coldwinternight.todo.entity.TaskEntity;
 public class Task {
     private Integer id;
     private Integer user_id;
-//    private String userName;
     private String task_body;
     private String title;
     private boolean completed;
     private boolean today;
+    private boolean archived;
 
     public static Task toModel(TaskEntity entity) {
         return new Task(
@@ -24,7 +24,8 @@ public class Task {
                 entity.getTask_body(),
                 entity.getTitle(),
                 entity.isCompleted(),
-                entity.isToday()
+                entity.isToday(),
+                entity.isArchived()
         );
     }
 }

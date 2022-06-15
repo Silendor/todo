@@ -35,4 +35,7 @@ public class TaskEntity extends BaseEntity{
 
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean today;
+
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean archived;
 }
