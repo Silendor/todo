@@ -1,6 +1,7 @@
 package ru.coldwinternight.todo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.coldwinternight.todo.exception.InvalidDataAccessApiUsageTasksFromUsersApiException;
@@ -18,20 +19,22 @@ import java.util.stream.Collectors;
 public class UserService implements UserServices {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     @Transactional
     public void create(UserEntity user) throws UserAlreadyExistException {
-//        if (userRepository.findByUsername(user.getUsername()) != null) {
         if (userRepository.findByEmailIgnoreCase(user.getEmail()).isPresent()) {
             String userExistMessage = "User with this email already exists";
             throw new UserAlreadyExistException(userExistMessage);
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
