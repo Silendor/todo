@@ -4,6 +4,16 @@ Test project for educational purposes
 API address:\
 https://todo.coldwinternight.ru/api/
 
+## Section login:
+https://todo.coldwinternight.ru/api/login
+
+POST https://todo.coldwinternight.ru/api/login \
+*awaits application/x-www-form-urlencoded*
+```
+email: "example@email.com"
+password: "examplepassword"
+```
+
 ## Section users:
 https://todo.coldwinternight.ru/api/users
 
