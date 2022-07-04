@@ -2,13 +2,13 @@
 Test project for educational purposes
 
 API address:\
-https://todo.coldwinternight.ru/todo/
+https://todo.coldwinternight.ru/api/
 
 ## Section users:
-https://todo.coldwinternight.ru/todo/users
+https://todo.coldwinternight.ru/api/users
 
 ### Create new user:
-POST http://todo.coldwinternight.ru/todo/users \
+POST http://todo.coldwinternight.ru/api/users \
 *awaits json*
 ```json
 {
@@ -19,7 +19,7 @@ POST http://todo.coldwinternight.ru/todo/users \
 ```
 
 ### Edit user:
-PATCH http://todo.coldwinternight.ru/todo/users/{id} \
+PATCH http://todo.coldwinternight.ru/api/users/{id} \
 *awaits json*
 ```json
 {
@@ -30,20 +30,20 @@ PATCH http://todo.coldwinternight.ru/todo/users/{id} \
 ```
 
 ### Delete user:
-DELETE http://todo.coldwinternight.ru/todo/users/{id} \
+DELETE http://todo.coldwinternight.ru/api/users/{id} \
 
 
 ## Section notes:
-https://todo.coldwinternight.ru/todo/notes
+https://todo.coldwinternight.ru/api/notes
 
 ### All user notes:
-GET http://todo.coldwinternight.ru/todo/notes?userid={id}
+GET http://todo.coldwinternight.ru/api/notes?userid={id}
 
 ### Get one task by ID:
-GET http://todo.coldwinternight.ru/todo/notes/{id}
+GET http://todo.coldwinternight.ru/api/notes/{id}
 
 ### Create new task for user by ID:
-POST http://todo.coldwinternight.ru/todo/notes?userid={id} \
+POST http://todo.coldwinternight.ru/api/notes?userid={id} \
 *awaits json*
 ```json
 {
@@ -56,10 +56,10 @@ POST http://todo.coldwinternight.ru/todo/notes?userid={id} \
 ```
 
 ### Reverse task status (completed/not completed):
-PUT http://todo.coldwinternight.ru/todo/notes/{id}
+PUT http://todo.coldwinternight.ru/api/notes/{id}
 
 ### Edit task:
-PATCH http://todo.coldwinternight.ru/todo/notes/{id}
+PATCH http://todo.coldwinternight.ru/api/notes/{id}
 *awaits json*
 ```json
 {
@@ -72,17 +72,17 @@ PATCH http://todo.coldwinternight.ru/todo/notes/{id}
 ```
 
 ### Delete task:
-DELETE http://todo.coldwinternight.ru/todo/notes/{id}
+DELETE http://todo.coldwinternight.ru/api/notes/{id}
 
 
 ## Section directories:
-https://todo.coldwinternight.ru/todo/directories
+https://todo.coldwinternight.ru/api/directories
 
 ### Get one directory by ID:
-GET http://todo.coldwinternight.ru/todo/directories/{id}
+GET http://todo.coldwinternight.ru/api/directories/{id}
 
 ### Create a new directory for user by ID:
-POST http://todo.coldwinternight.ru/todo/directories?userid={id} \
+POST http://todo.coldwinternight.ru/api/directories?userid={id} \
 *awaits json*
 ```json
 {
@@ -91,7 +91,7 @@ POST http://todo.coldwinternight.ru/todo/directories?userid={id} \
 ```
 
 ### Edit directory:
-PATCH http://todo.coldwinternight.ru/todo/directories/{id} \
+PATCH http://todo.coldwinternight.ru/api/directories/{id} \
 *awaits json*
 ```json
 {
@@ -100,4 +100,4 @@ PATCH http://todo.coldwinternight.ru/todo/directories/{id} \
 ```
 
 ### Delete a directory:
-DELETE http://todo.coldwinternight.ru/todo/directories/{id}
+DELETE http://todo.coldwinternight.ru/api/directories/{id}
