@@ -2,13 +2,13 @@
 Test project for educational purposes
 
 API address:\
-https://todo.coldwinternight.ru/todo/
+https://todo.coldwinternight.ru/api/
 
 ## Section users:
-https://todo.coldwinternight.ru/todo/users
+https://todo.coldwinternight.ru/api/users
 
 ### Create new user:
-POST https://todo.coldwinternight.ru/todo/users \
+POST https://todo.coldwinternight.ru/api/users \
 *awaits json*
 ```json
 {
@@ -29,7 +29,7 @@ or
 ```
 
 ### Edit user:
-PATCH https://todo.coldwinternight.ru/todo/users/{id} \
+PATCH https://todo.coldwinternight.ru/api/users/{id} \
 *awaits json*
 ```json
 {
@@ -50,7 +50,7 @@ or
 ```
 
 ### Edit password:
-PATCH https://todo.coldwinternight.ru/todo/users/{id}/password \
+PATCH https://todo.coldwinternight.ru/api/users/{id}/password \
 *awaits json*
 ```json
 {
@@ -60,20 +60,20 @@ PATCH https://todo.coldwinternight.ru/todo/users/{id}/password \
 ```
 
 ### Delete user:
-DELETE https://todo.coldwinternight.ru/todo/users/{id} \
+DELETE https://todo.coldwinternight.ru/api/users/{id} \
 
 
 ## Section tasks:
-https://todo.coldwinternight.ru/todo/tasks
+https://todo.coldwinternight.ru/api/tasks
 
 ### All user tasks:
-GET https://todo.coldwinternight.ru/todo/tasks?userid={id}
+GET https://todo.coldwinternight.ru/api/tasks?userid={id}
 
 ### Get one task by ID:
-GET https://todo.coldwinternight.ru/todo/tasks/{id}
+GET https://todo.coldwinternight.ru/api/tasks/{id}
 
 ### Create new task for user by ID:
-POST https://todo.coldwinternight.ru/todo/tasks?userid={id} \
+POST https://todo.coldwinternight.ru/api/tasks?userid={id} \
 *awaits json*
 ```json
 {
@@ -94,10 +94,10 @@ or
 ```
 
 ### Reverse task status (completed/not completed):
-PUT https://todo.coldwinternight.ru/todo/tasks/{id}
+PUT https://todo.coldwinternight.ru/api/tasks/{id}
 
 ### Edit task:
-PATCH https://todo.coldwinternight.ru/todo/tasks/{id}
+PATCH https://todo.coldwinternight.ru/api/tasks/{id}
 *awaits json*
 ```json
 {
@@ -118,4 +118,4 @@ or
 ```
 
 ### Delete task:
-DELETE https://todo.coldwinternight.ru/todo/tasks/{id}
+DELETE https://todo.coldwinternight.ru/api/tasks/{id}
