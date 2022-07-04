@@ -1,6 +1,8 @@
 INSERT INTO users VALUES
-(1, 'testuser', 'user@email.com', '1345q', 3, false),
-(2, 'testadmin', 'admin@email.com', 'qwerty123', 2, false);
+(1, 'testuser', 'user@email.com', '$2a$12$3b8C/2afZf/FdlRYcIGsiuW75BXFZ8iQAZXLw4t42DYbKdAEY9iVC', 3, false),
+-- 1345q
+(2, 'testadmin', 'admin@email.com', '$2a$12$j1QTNJauUDNcEbBI5I13kupTAGzMehw5BpPMhDlLHcWov8SMsEq6i', 2, false);
+-- qwerty123
 INSERT INTO tasks VALUES
 (1, 1, 'test task 1 user1', 'title 1', false, false),
 (2, 1, 'test task 2 user1', 'title 2', false, false),
