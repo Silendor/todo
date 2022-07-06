@@ -16,19 +16,13 @@ import ru.coldwinternight.todo.service.UserService;
 public class LoginController {
     private final UserService userService;
 
-    @GetMapping
-    public ResponseEntity<?> login() {
-//        not implemented
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
     @PostMapping("/register")
     public ResponseEntity<?> register() {
 //        not implemented
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public ResponseEntity<?> logout() {
 //        not implemented
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
