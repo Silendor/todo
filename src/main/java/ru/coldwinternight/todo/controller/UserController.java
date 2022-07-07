@@ -1,8 +1,9 @@
 package ru.coldwinternight.todo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import ru.coldwinternight.todo.exception.IncorrectPasswordException;
 import ru.coldwinternight.todo.exception.UserAlreadyExistException;
@@ -16,21 +17,17 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController implements UniversalController {
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping
     public ResponseEntity<?> index() {
         try {
             List<User> users = userService.readAll();
             return new ResponseEntity<>(users, HttpStatus.OK);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | UsernameNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,7 +40,7 @@ public class UserController implements UniversalController {
         try {
             User user = userService.read(id);
             return new ResponseEntity<>(user, HttpStatus.OK);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | UsernameNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,7 +68,7 @@ public class UserController implements UniversalController {
             String updateMessage = "User successfully updated";
             userService.update(user, id);
             return new ResponseEntity<>(updateMessage, HttpStatus.OK);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | UsernameNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +115,7 @@ public class UserController implements UniversalController {
             String deleteMessage = "User successfully deleted";
             userService.delete(id);
             return new ResponseEntity<>(deleteMessage, HttpStatus.OK);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | UsernameNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();

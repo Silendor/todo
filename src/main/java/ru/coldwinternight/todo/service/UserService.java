@@ -1,6 +1,12 @@
 package ru.coldwinternight.todo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.coldwinternight.todo.exception.IncorrectPasswordException;
@@ -11,19 +17,19 @@ import ru.coldwinternight.todo.exception.UserNotFoundException;
 import ru.coldwinternight.todo.model.User;
 import ru.coldwinternight.todo.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
+@Repository("userService")
 @Transactional(readOnly = true)
-public class UserService implements UserServices {
+public class UserService implements UserServices, UserDetailsService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -32,6 +38,7 @@ public class UserService implements UserServices {
             String userExistMessage = "User with this email already exists";
             throw new UserAlreadyExistException(userExistMessage);
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -51,12 +58,24 @@ public class UserService implements UserServices {
     }
 
     @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        // username that user login with = email
+        UserEntity user = userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", email)));
+
+        // don't have any authorities
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+    }
+
+    @Override
     @Transactional
     public void update(UserEntity user, int id) throws UserNotFoundException {
         userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
         if (user.getTasks() != null)
             throw new InvalidDataAccessApiUsageTasksFromUsersApiException();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setId(id);
         userRepository.save(user);
     }
