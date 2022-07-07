@@ -4,12 +4,27 @@ Test project for educational purposes
 API address:\
 https://todo.coldwinternight.ru/api/
 
+## Section login:
+https://todo.coldwinternight.ru/api/login
+
+POST https://todo.coldwinternight.ru/api/login \
+*expects application/x-www-form-urlencoded*
+```
+email: "example@email.com"
+password: "examplepassword"
+```
+
 ## Section users:
-https://todo.coldwinternight.ru/api/users
+https://todo.coldwinternight.ru/api/users \
+*expects header with token*
+```
+Authorization : Bearer $token
+```
+
 
 ### Create new user:
 POST https://todo.coldwinternight.ru/api/users \
-*awaits json*
+*expects json*
 ```json
 {
   "username": "Matt2",
@@ -30,7 +45,7 @@ or
 
 ### Edit user:
 PATCH https://todo.coldwinternight.ru/api/users/{id} \
-*awaits json*
+*expects json*
 ```json
 {
   "username": "Matt2",
@@ -51,7 +66,7 @@ or
 
 ### Edit password:
 PATCH https://todo.coldwinternight.ru/api/users/{id}/password \
-*awaits json*
+*expects json*
 ```json
 {
   "oldpassword": "actual password",
@@ -64,7 +79,12 @@ DELETE https://todo.coldwinternight.ru/api/users/{id} \
 
 
 ## Section tasks:
-https://todo.coldwinternight.ru/api/tasks
+https://todo.coldwinternight.ru/api/tasks \
+*expects header with token*
+```
+Authorization : Bearer $token
+```
+
 
 ### All user tasks:
 GET https://todo.coldwinternight.ru/api/tasks?userid={id}
@@ -74,7 +94,7 @@ GET https://todo.coldwinternight.ru/api/tasks/{id}
 
 ### Create new task for user by ID:
 POST https://todo.coldwinternight.ru/api/tasks?userid={id} \
-*awaits json*
+*expects json*
 ```json
 {
   "user_id": 2,
@@ -98,7 +118,7 @@ PUT https://todo.coldwinternight.ru/api/tasks/{id}
 
 ### Edit task:
 PATCH https://todo.coldwinternight.ru/api/tasks/{id}
-*awaits json*
+*expects json*
 ```json
 {
   "user_id": 2,
