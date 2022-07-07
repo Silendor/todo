@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(200),
     email VARCHAR(254) NOT NULL,
     password VARCHAR(200) NOT NULL,
-    today_amount INTEGER NOT NULL default 3,
-    randomize_today_tasks BOOLEAN NOT NULL default false,
+    today_amount INTEGER DEFAULT 3 NOT NULL,
+    randomize_today_tasks BOOLEAN DEFAULT false NOT NULL,
     UNIQUE (email),
     CHECK ( email != '' AND password != '' )
 --                                  ,
@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS tasks (
     user_id INTEGER NOT NULL,
     title VARCHAR(254) NOT NULL,
     task_body VARCHAR(254) NOT NULL,
-    completed BOOLEAN NOT NULL default false,
-    today BOOLEAN NOT NULL default false,
-    archived BOOLEAN NOT NULL default false,
+    completed BOOLEAN default false,
+    today BOOLEAN default false,
+    archived BOOLEAN default false,
     CHECK ( task_body != '' AND title != '' ),
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
