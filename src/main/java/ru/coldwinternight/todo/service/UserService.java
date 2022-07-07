@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Repository("userService")
 @Transactional(readOnly = true)
 public class UserService implements UserServices, UserDetailsService {
 

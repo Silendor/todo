@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.coldwinternight.todo.filter.JwtUsernameAndPasswordAuthenticationFilter;
 import ru.coldwinternight.todo.filter.JwtTokenVerifierAuthorizationFilter;
+import ru.coldwinternight.todo.service.UserService;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -24,25 +25,25 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final Algorithm algorithm;
     private final JwtConfig jwtConfig;
 
     @Autowired
-    public SecurityConfig(PasswordEncoder passwordEncoder,
-                          @Qualifier("userService") UserDetailsService userDetailsService,
+    public SecurityConfig(UserService userService,
+                          PasswordEncoder passwordEncoder,
                           Algorithm algorithm,
                           JwtConfig jwtConfig) {
+        this.userService = userService;
         this.passwordEncoder = passwordEncoder;
-        this.userDetailsService = userDetailsService;
         this.algorithm = algorithm;
         this.jwtConfig = jwtConfig;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 
     @Override
