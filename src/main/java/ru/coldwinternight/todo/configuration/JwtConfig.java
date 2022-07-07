@@ -1,12 +1,12 @@
 package ru.coldwinternight.todo.configuration;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
 @ConfigurationProperties(prefix = "application.jwt")
 public class JwtConfig {
 
