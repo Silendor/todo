@@ -23,7 +23,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @RequiredArgsConstructor
-public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final Algorithm algorithm;
     private final JwtConfig jwtConfig;
