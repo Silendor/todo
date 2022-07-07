@@ -28,7 +28,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
-public class CustomAuthorizationFilter extends OncePerRequestFilter {
+public class JwtTokenVerifierAuthorizationFilter extends OncePerRequestFilter {
     private final Algorithm algorithm;
     private final JwtConfig jwtConfig;
 

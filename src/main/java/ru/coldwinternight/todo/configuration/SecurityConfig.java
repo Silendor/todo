@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.coldwinternight.todo.filter.JwtUsernameAndPasswordAuthenticationFilter;
-import ru.coldwinternight.todo.filter.CustomAuthorizationFilter;
+import ru.coldwinternight.todo.filter.JwtTokenVerifierAuthorizationFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().antMatchers("/", "/api/login", "/api/login/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(jwtUsernameAndPasswordAuthenticationFilter);
-        http.addFilterAfter(new CustomAuthorizationFilter(algorithm, jwtConfig), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(new JwtTokenVerifierAuthorizationFilter(algorithm, jwtConfig), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
