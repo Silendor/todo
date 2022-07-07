@@ -3,13 +3,14 @@ package ru.coldwinternight.todo.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ru.coldwinternight.todo.configuration.JwtConfig;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,7 +27,11 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@RequiredArgsConstructor
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
+    private final Algorithm algorithm;
+    private final JwtConfig jwtConfig;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -35,25 +40,22 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 //        if (request.getServletPath().equals("/api/login")) {
             filterChain.doFilter(request, response);
         } else {
-            String prefix = "Bearer ";
+            String prefix = jwtConfig.getTokenPrefix();
             String authorizationHeader = request.getHeader(AUTHORIZATION);
             if (authorizationHeader != null && authorizationHeader.startsWith(prefix)) {
                 try {
                     String token = authorizationHeader.substring(prefix.length());
-                    String secret = "3QdmqX7zLtkClSbC44b3r53rZwhcqKB9XVskzFmHQKRPlzKZ9RnV9RVTp7xPdNjnHq6N4BDGfc2SDPMTjJkK25SNC9wJHpGH6SG9";
-                    Algorithm algorithm = Algorithm.HMAC256(secret.getBytes(StandardCharsets.UTF_8));
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String email = decodedJWT.getSubject();
+                    // no roles and authorities
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(email, null, authorities);
-//                    authenticationToken.setAuthenticated(true);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
                     response.setHeader("error", e.getMessage());
-//                    response.sendError(FORBIDDEN.value());
                     response.setStatus(FORBIDDEN.value());
                     Map<String, String> error = new HashMap<>();
                     error.put("error_message", e.getMessage());
