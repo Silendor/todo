@@ -16,6 +16,7 @@ import ru.coldwinternight.todo.filter.JwtUsernameAndPasswordAuthenticationFilter
 import ru.coldwinternight.todo.filter.JwtTokenVerifierAuthorizationFilter;
 import ru.coldwinternight.todo.service.UserService;
 
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -58,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .addFilterAfter(new JwtTokenVerifierAuthorizationFilter(algorithm, jwtConfig), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
                 .antMatchers("/", "/login").permitAll()
+                .antMatchers(POST, "/users").permitAll()
 //        http.authorizeRequests().antMatchers("/", "/api/login", "/api/login/**").permitAll();
                 .anyRequest().authenticated();
     }
