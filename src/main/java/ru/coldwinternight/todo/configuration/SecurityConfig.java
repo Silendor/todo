@@ -49,13 +49,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JwtUsernameAndPasswordAuthenticationFilter jwtUsernameAndPasswordAuthenticationFilter =
                 new JwtUsernameAndPasswordAuthenticationFilter(authenticationManagerBean(), algorithm, jwtConfig);
 //        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
-        http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(STATELESS);
-        http.authorizeRequests().antMatchers("/", "/login").permitAll();
+        http
+            .csrf().disable()
+            .sessionManagement()
+                .sessionCreationPolicy(STATELESS)
+            .and()
+            .addFilter(jwtUsernameAndPasswordAuthenticationFilter)
+            .addFilterAfter(new JwtTokenVerifierAuthorizationFilter(algorithm, jwtConfig), UsernamePasswordAuthenticationFilter.class)
+            .authorizeRequests()
+                .antMatchers("/", "/login").permitAll()
 //        http.authorizeRequests().antMatchers("/", "/api/login", "/api/login/**").permitAll();
-        http.authorizeRequests().anyRequest().authenticated();
-        http.addFilter(jwtUsernameAndPasswordAuthenticationFilter);
-        http.addFilterAfter(new JwtTokenVerifierAuthorizationFilter(algorithm, jwtConfig), UsernamePasswordAuthenticationFilter.class);
+                .anyRequest().authenticated();
     }
 
     @Bean
