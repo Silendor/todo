@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         JwtUsernameAndPasswordAuthenticationFilter jwtUsernameAndPasswordAuthenticationFilter =
-                new JwtUsernameAndPasswordAuthenticationFilter(authenticationManagerBean(), algorithm, jwtConfig);
+                new JwtUsernameAndPasswordAuthenticationFilter(authenticationManagerBean(), algorithm, jwtConfig, userService);
 //        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http
             .csrf().disable()

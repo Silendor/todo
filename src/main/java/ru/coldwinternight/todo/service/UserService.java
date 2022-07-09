@@ -66,6 +66,11 @@ public class UserService implements UserServices, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
 
+    public UserEntity loadUserByEmail(String email) throws UserNotFoundException {
+        return userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(UserNotFoundException::new);
+    }
+
     @Override
     @Transactional
     public void update(UserEntity user, int id) throws UserNotFoundException {
