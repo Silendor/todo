@@ -37,10 +37,10 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(columnDefinition = "integer default 3", nullable = false)
-    private Integer today_amount;
+    @Column(columnDefinition = "integer default 3")
+    private Integer today_amount = 3;
 
-    @Column(columnDefinition = "boolean default false", nullable = false)
+    @Column(columnDefinition = "boolean default false")
     private boolean randomize_today_tasks;
 
 //    private Date registerDate;

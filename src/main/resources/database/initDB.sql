@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(200),
     email VARCHAR(254) NOT NULL,
     password VARCHAR(200) NOT NULL,
-    today_amount INTEGER DEFAULT 3 NOT NULL,
-    randomize_today_tasks BOOLEAN DEFAULT false NOT NULL,
+    today_amount INTEGER DEFAULT 3,
+    randomize_today_tasks BOOLEAN DEFAULT false,
     UNIQUE (email),
     CHECK ( email != '' AND password != '' )
 --                                  ,
