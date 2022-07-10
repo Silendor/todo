@@ -1,8 +1,8 @@
 INSERT INTO users VALUES
-(1, 'testuser', 'user@email.com', '$2a$12$3b8C/2afZf/FdlRYcIGsiuW75BXFZ8iQAZXLw4t42DYbKdAEY9iVC', 3, false),
--- 1345q
-(2, 'testadmin', 'admin@email.com', '$2a$12$j1QTNJauUDNcEbBI5I13kupTAGzMehw5BpPMhDlLHcWov8SMsEq6i', 2, false);
--- qwerty123
+(1, 'guide', 'guide@mail.com', '$2a$12$RRahLPGvo77Bjp1jNFSsOeuIH2Ue6Y8U8HTQXE9uAA5bmb4UiLp2q', 3, false),
+-- wallofflesh
+(2, 'merchant', 'trader@email.old', '$2a$12$zfNUTBsNRLAzJ2XRhFGop.i4e0XuAkQRhMBZWGlzwrdB8S6YrXO3O', 2, false);
+-- goldgoldgold
 INSERT INTO tasks VALUES
 (1, 1, 'test task 1 user1', 'title 1', false, false),
 (2, 1, 'test task 2 user1', 'title 2', false, false),
