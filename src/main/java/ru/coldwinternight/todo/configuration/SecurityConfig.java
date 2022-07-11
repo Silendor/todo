@@ -12,10 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.coldwinternight.todo.filter.CorsSecurityWebFilter;
 import ru.coldwinternight.todo.filter.JwtUsernameAndPasswordAuthenticationFilter;
 import ru.coldwinternight.todo.filter.JwtTokenVerifierAuthorizationFilter;
 import ru.coldwinternight.todo.service.UserService;
+
 
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -29,19 +29,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final Algorithm algorithm;
     private final JwtConfig jwtConfig;
-    private final CorsConfig corsConfig;
 
     @Autowired
     public SecurityConfig(UserService userService,
                           PasswordEncoder passwordEncoder,
                           Algorithm algorithm,
-                          JwtConfig jwtConfig,
-                          CorsConfig corsConfig) {
+                          JwtConfig jwtConfig
+    ) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.algorithm = algorithm;
         this.jwtConfig = jwtConfig;
-        this.corsConfig = corsConfig;
     }
 
     @Override
@@ -56,8 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         algorithm, jwtConfig, userService);
         JwtTokenVerifierAuthorizationFilter jwtTokenVerifierAuthorizationFilter =
                 new JwtTokenVerifierAuthorizationFilter(algorithm, jwtConfig);
-        CorsSecurityWebFilter corsSecurityWebFilter = new CorsSecurityWebFilter(corsConfig.corsConfigurationSource());
-//        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
+//        jwtUsernameAndPasswordAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http
             .cors()
             .and()
@@ -65,13 +62,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement()
                 .sessionCreationPolicy(STATELESS)
             .and()
-            .addFilterBefore(corsSecurityWebFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilter(jwtUsernameAndPasswordAuthenticationFilter)
             .addFilterAfter(jwtTokenVerifierAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
                 .antMatchers("/", "/login").permitAll()
                 .antMatchers(POST, "/users").permitAll()
-//        http.authorizeRequests().antMatchers("/", "/api/login", "/api/login/**").permitAll();
+//              .antMatchers("/", "/api/login", "/api/login/**").permitAll();
                 .anyRequest().authenticated();
     }
 
