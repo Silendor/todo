@@ -18,8 +18,9 @@ public class CorsSecurityWebFilter extends CorsFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-//        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, PATCH, DELETE");
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, PATCH, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization");
         filterChain.doFilter(request, response);
     }

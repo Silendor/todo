@@ -59,6 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CorsSecurityWebFilter corsSecurityWebFilter = new CorsSecurityWebFilter(corsConfig.corsConfigurationSource());
 //        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http
+            .cors()
+            .and()
             .csrf().disable()
             .sessionManagement()
                 .sessionCreationPolicy(STATELESS)
