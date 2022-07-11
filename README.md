@@ -114,7 +114,7 @@ or
 ```
 
 ### Reverse task status (completed/not completed):
-PATCH https://todo.coldwinternight.ru/api/tasks/{id}
+PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseStatus
 
 ### Edit task:
 PUT https://todo.coldwinternight.ru/api/tasks/{id}

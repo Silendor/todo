@@ -70,20 +70,6 @@ public class TaskController implements UniversalController {
         }
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<?> reverseCompletedStatus(@PathVariable(name = "id") int id) {
-        try {
-            String statusReverseMessage = "The task status has reversed";
-            taskService.reverseCompletedStatus(id);
-            return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
-        } catch (TaskNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
-        }
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody TaskEntity task) {
         try {
@@ -97,6 +83,20 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
+    @PatchMapping("/{id}/reverseStatus")
+    public ResponseEntity<?> reverseCompletedStatus(@PathVariable(name = "id") int id) {
+        try {
+            String statusReverseMessage = "The task status has reversed";
+            taskService.reverseCompletedStatus(id);
+            return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
+        } catch (TaskNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
+        }
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
