@@ -44,7 +44,7 @@ or
 ```
 
 ### Edit user:
-PATCH https://todo.coldwinternight.ru/api/users/{id} \
+PUT https://todo.coldwinternight.ru/api/users/{id} \
 *expects json*
 ```json
 {
@@ -114,10 +114,10 @@ or
 ```
 
 ### Reverse task status (completed/not completed):
-PUT https://todo.coldwinternight.ru/api/tasks/{id}
+PATCH https://todo.coldwinternight.ru/api/tasks/{id}
 
 ### Edit task:
-PATCH https://todo.coldwinternight.ru/api/tasks/{id}
+PUT https://todo.coldwinternight.ru/api/tasks/{id}
 *expects json*
 ```json
 {

@@ -70,7 +70,7 @@ public class TaskController implements UniversalController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> reverseCompletedStatus(@PathVariable(name = "id") int id) {
         try {
             String statusReverseMessage = "The task status has reversed";
@@ -84,7 +84,7 @@ public class TaskController implements UniversalController {
         }
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody TaskEntity task) {
         try {
             String updateMessage = "Task successfully updated";

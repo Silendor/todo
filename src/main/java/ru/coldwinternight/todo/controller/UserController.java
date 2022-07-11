@@ -62,7 +62,7 @@ public class UserController implements UniversalController {
         }
     }
 
-    @PatchMapping(value = "/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody UserEntity user) {
         try {
             String updateMessage = "User successfully updated";
