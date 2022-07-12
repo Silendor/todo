@@ -89,10 +89,10 @@ public class UserService implements UserServices, UserDetailsService {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
 
-        if (!oldPassword.equals(user.getPassword()))
+        if (!user.getPassword().equals(passwordEncoder.encode(oldPassword)))
             throw new IncorrectPasswordException("Incorrect old password.");
 
-        userRepository.updatePassword(newPassword, id);
+        userRepository.updatePassword(passwordEncoder.encode(newPassword), id);
     }
 
     @Override
