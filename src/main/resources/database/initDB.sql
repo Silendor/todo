@@ -17,11 +17,11 @@ CREATE TABLE IF NOT EXISTS tasks (
     id INTEGER PRIMARY KEY,
     user_id INTEGER NOT NULL,
     title VARCHAR(254) NOT NULL,
-    task_body VARCHAR(254) NOT NULL,
+    task_body VARCHAR(254) DEFAULT '',
     completed BOOLEAN default false,
     today BOOLEAN default false,
     archived BOOLEAN default false,
-    CHECK ( task_body != '' AND title != '' ),
+    CHECK ( title != '' ),
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 CREATE SEQUENCE IF NOT EXISTS task_id_seq START WITH 5 INCREMENT BY 1;
