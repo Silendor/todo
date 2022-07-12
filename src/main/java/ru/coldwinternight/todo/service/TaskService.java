@@ -24,11 +24,12 @@ public class TaskService implements TaskServices {
 
     @Override
     @Transactional
-    public void create(TaskEntity task, int userId) throws UserNotFoundException {
+    public TaskEntity create(TaskEntity task, int userId) throws UserNotFoundException {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
         task.setUser(user);
         taskRepository.save(task);
+        return task;
     }
 
     @Override

@@ -57,8 +57,9 @@ public class TaskController implements UniversalController {
             if (userId == null)
                 throw new IllegalStateException("userid parameter expected");
 
-            String successfullyCreatedMessage = "Task created successfully";
-            taskService.create(task, userId);
+            TaskEntity taskEntity = taskService.create(task, userId);
+            String successfullyCreatedMessage = String.format("Task with id %d created successfully",
+                    taskEntity.getId());
             return new ResponseEntity<>(successfullyCreatedMessage, HttpStatus.CREATED);
         } catch (UserNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
