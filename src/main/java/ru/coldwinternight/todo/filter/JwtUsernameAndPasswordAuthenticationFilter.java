@@ -4,7 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,7 +13,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import ru.coldwinternight.todo.configuration.JwtConfig;
 import ru.coldwinternight.todo.entity.UserEntity;
 import ru.coldwinternight.todo.exception.UserNotFoundException;
-import ru.coldwinternight.todo.repository.UserRepository;
 import ru.coldwinternight.todo.service.UserService;
 
 import javax.servlet.FilterChain;
@@ -66,8 +64,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         UserEntity userEntity = null;
         Map<String, String> answer = new HashMap<>();
         try {
-            userEntity = userService.loadUserByEmail(user.getUsername());
-            answer.put("user_id", userEntity.getId().toString());
+            userEntity = userService.loadUserEntityByEmail(user.getUsername());
+            if (userEntity.getId() != null)
+                answer.put("user_id", userEntity.getId().toString());
+            else
+                throw new UserNotFoundException();
             answer.put(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + access_token);
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), answer);
