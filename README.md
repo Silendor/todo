@@ -37,13 +37,12 @@ POST https://todo.coldwinternight.ru/api/users \
 or
 ```json
 {
-  "username": "Matt2",
   "email": "mattuser2@mail.com",
   "password": "123mattpass2"
 }
 ```
 
-### Edit user:
+### ~~Edit user~~:
 PUT https://todo.coldwinternight.ru/api/users/{id} \
 *expects json*
 ```json
@@ -78,7 +77,7 @@ PATCH https://todo.coldwinternight.ru/api/users/{id}/password \
 }
 ```
 
-### Delete user:
+### ~~Delete user~~:
 DELETE https://todo.coldwinternight.ru/api/users/{id} \
 
 
@@ -101,19 +100,15 @@ POST https://todo.coldwinternight.ru/api/tasks?userid={id} \
 *expects json*
 ```json
 {
-  "user_id": 2,
   "title": "test title",
   "task_body": "test todo",
-  "completed": false,
   "today": false
 }
 ```
 or
 ```json
 {
-  "user_id": 2,
-  "title": "test title",
-  "task_body": "test todo"
+  "title": "test title"
 }
 ```
 
@@ -129,7 +124,7 @@ PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseToday \
 PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseArchived \
 *answer will provide current status after change*
 
-### Edit task:
+### ~~Edit task~~:
 PUT https://todo.coldwinternight.ru/api/tasks/{id}
 *expects json*
 ```json
@@ -150,5 +145,5 @@ or
 }
 ```
 
-### Delete task:
+### ~~Delete task~~:
 DELETE https://todo.coldwinternight.ru/api/tasks/{id}
