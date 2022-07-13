@@ -102,8 +102,8 @@ public class TaskController implements UniversalController {
     @PatchMapping("/{id}/reverseCompleted")
     public ResponseEntity<?> reverseCompleted(@PathVariable(name = "id") int id) {
         try {
-            String statusReverseMessage = "The task status has reversed";
-            taskService.reverseCompleted(id);
+            boolean status = taskService.reverseCompleted(id);
+            String statusReverseMessage = String.format("The task is completed: %b", status);
             return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
         } catch (TaskNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

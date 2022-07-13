@@ -64,11 +64,12 @@ public class TaskService implements TaskServices {
     }
 
     @Transactional
-    public void reverseCompleted(int id) throws TaskNotFoundException {
+    public boolean reverseCompleted(int id) throws TaskNotFoundException {
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(TaskNotFoundException::new);
         task.setCompleted(!task.isCompleted());
         taskRepository.save(task);
+        return task.isCompleted();
     }
 
     @Transactional

@@ -114,7 +114,8 @@ or
 ```
 
 ### Reverse task 'completed' field:
-PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseCompleted
+PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseCompleted \
+*answer will provide current status after change*
 
 ### Reverse task 'today' field:
 PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseToday \
