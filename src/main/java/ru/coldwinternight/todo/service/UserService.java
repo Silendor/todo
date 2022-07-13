@@ -31,13 +31,14 @@ public class UserService implements UserServices, UserDetailsService {
 
     @Override
     @Transactional
-    public void create(UserEntity user) throws UserAlreadyExistException {
+    public UserEntity create(UserEntity user) throws UserAlreadyExistException {
         if (userRepository.findByEmailIgnoreCase(user.getEmail()).isPresent()) {
             String userExistMessage = "User with this email already exists";
             throw new UserAlreadyExistException(userExistMessage);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        return user;
     }
 
     @Override

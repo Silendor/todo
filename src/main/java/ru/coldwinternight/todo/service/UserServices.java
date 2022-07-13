@@ -13,7 +13,7 @@ public interface UserServices {
     * Create a new user
     * @param user - user for creation
     */
-    void create(UserEntity user) throws UserAlreadyExistException;
+    UserEntity create(UserEntity user) throws UserAlreadyExistException;
 
     /**
      * Returns list of all users
