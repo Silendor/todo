@@ -52,7 +52,7 @@ public class UserController implements UniversalController {
     public ResponseEntity<?> create(@Valid @RequestBody UserEntity user) {
         try {
             UserEntity userEntity = userService.create(user);
-            String successfullyCreatedMessage = String.format("User %d created successfully", userEntity.getId());
+            String successfullyCreatedMessage = String.format("User with id %d created successfully", userEntity.getId());
             return new ResponseEntity<>(successfullyCreatedMessage, HttpStatus.CREATED);
         } catch (UserAlreadyExistException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
