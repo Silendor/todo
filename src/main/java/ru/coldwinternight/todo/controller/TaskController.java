@@ -84,20 +84,6 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
-    @PatchMapping("/{id}/reverseStatus")
-    public ResponseEntity<?> reverseCompletedStatus(@PathVariable(name = "id") int id) {
-        try {
-            String statusReverseMessage = "The task status has reversed";
-            taskService.reverseCompletedStatus(id);
-            return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
-        } catch (TaskNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
-        }
-    }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
@@ -112,4 +98,47 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
+
+    @PatchMapping("/{id}/reverseCompleted")
+    public ResponseEntity<?> reverseCompleted(@PathVariable(name = "id") int id) {
+        try {
+            String statusReverseMessage = "The task status has reversed";
+            taskService.reverseCompleted(id);
+            return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
+        } catch (TaskNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
+        }
+    }
+
+    @PatchMapping("/{id}/reverseToday")
+    public ResponseEntity<?> reverseToday(@PathVariable(name = "id") int id) {
+        try {
+            boolean status = taskService.reverseToday(id);
+            String statusReverseMessage = String.format("New status of today: %b", status);
+            return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
+        } catch (TaskNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
+        }
+    }
+
+    @PatchMapping("/{id}/reverseArchived")
+    public ResponseEntity<?> reverseArchived(@PathVariable(name = "id") int id) {
+        try {
+            boolean status = taskService.reverseArchived(id);
+            String statusReverseMessage = String.format("New status of archived: %b", status);
+            return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
+        } catch (TaskNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
+        }
+    }
+
 }

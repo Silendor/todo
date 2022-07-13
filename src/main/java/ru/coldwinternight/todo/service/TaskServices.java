@@ -12,8 +12,6 @@ public interface TaskServices {
 
     List<Task> readAllByUserId(int userId) throws UserNotFoundException, TaskNotFoundException;
 
-    void reverseCompletedStatus(int id) throws TaskNotFoundException;
-
     Task read(int id) throws TaskNotFoundException;
 
     void update(TaskEntity note, int id) throws TaskNotFoundException;

@@ -113,8 +113,16 @@ or
 }
 ```
 
-### Reverse task status (completed/not completed):
-PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseStatus
+### Reverse task 'completed' field:
+PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseCompleted
+
+### Reverse task 'today' field:
+PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseToday \
+*answer will provide current status after change*
+
+### Reverse archived 'archived' field:
+PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseArchived \
+*answer will provide current status after change*
 
 ### Edit task:
 PUT https://todo.coldwinternight.ru/api/tasks/{id}

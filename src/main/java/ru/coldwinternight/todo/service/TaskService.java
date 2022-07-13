@@ -33,26 +33,10 @@ public class TaskService implements TaskServices {
     }
 
     @Override
-    @Transactional
-    public void reverseCompletedStatus(int id) throws TaskNotFoundException {
-        TaskEntity task = taskRepository.findById(id)
-                .orElseThrow(TaskNotFoundException::new);
-        task.setCompleted(!task.isCompleted());
-        taskRepository.save(task);
-    }
-
-    @Override
     public Task read(int id) throws TaskNotFoundException {
         TaskEntity taskEntity = taskRepository.findById(id)
                 .orElseThrow(TaskNotFoundException::new);
         return Task.toModel(taskEntity);
-    }
-
-    @Override
-    public List<Task> readAllByUserId(int userId) throws UserNotFoundException, TaskNotFoundException {
-        userRepository.findById(userId)
-                .orElseThrow(UserNotFoundException::new);
-        return taskRepository.findAllByUser_Id(userId).stream().map(Task::toModel).collect(Collectors.toList());
     }
 
     @Override
@@ -71,4 +55,38 @@ public class TaskService implements TaskServices {
                 .orElseThrow(TaskNotFoundException::new);
         taskRepository.deleteById(id);
     }
+
+    @Override
+    public List<Task> readAllByUserId(int userId) throws UserNotFoundException, TaskNotFoundException {
+        userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        return taskRepository.findAllByUser_Id(userId).stream().map(Task::toModel).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void reverseCompleted(int id) throws TaskNotFoundException {
+        TaskEntity task = taskRepository.findById(id)
+                .orElseThrow(TaskNotFoundException::new);
+        task.setCompleted(!task.isCompleted());
+        taskRepository.save(task);
+    }
+
+    @Transactional
+    public boolean reverseToday(int id) throws TaskNotFoundException {
+        TaskEntity task = taskRepository.findById(id)
+                .orElseThrow(TaskNotFoundException::new);
+        task.setToday(!task.isToday());
+        taskRepository.save(task);
+        return task.isToday();
+    }
+
+    @Transactional
+    public boolean reverseArchived(int id) throws TaskNotFoundException {
+        TaskEntity task = taskRepository.findById(id)
+                .orElseThrow(TaskNotFoundException::new);
+        task.setArchived(!task.isArchived());
+        taskRepository.save(task);
+        return task.isArchived();
+    }
+
 }
