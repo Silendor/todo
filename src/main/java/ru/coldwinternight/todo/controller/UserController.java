@@ -125,7 +125,7 @@ public class UserController implements UniversalController {
     }
 
     @PatchMapping("/{id}/reverseRandomize")
-    public ResponseEntity<?> reverseRandomize(@PathVariable(name = "id") int id) {
+    public ResponseEntity<?> reverseRandomizeTasks(@PathVariable(name = "id") int id) {
         try {
             boolean status = userService.reverseRandomizeTasks(id);
             String statusReverseMessage = String.format("Randomize user tasks enabled: %b", status);

@@ -65,7 +65,7 @@ or
 ```
 
 ### Reverse user 'randomize_today_tasks' field:
-PATCH https://todo.coldwinternight.ru/api/users/{id}/reverseRandomize \
+PATCH https://todo.coldwinternight.ru/api/users/{id}/reverseRandomizeTasks \
 *answer will provide current status after change*
 
 ### Edit password:
