@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import ru.coldwinternight.todo.exception.IncorrectPasswordException;
+import ru.coldwinternight.todo.exception.TaskNotFoundException;
 import ru.coldwinternight.todo.exception.UserAlreadyExistException;
 import ru.coldwinternight.todo.entity.UserEntity;
 import ru.coldwinternight.todo.exception.UserNotFoundException;
@@ -116,6 +117,20 @@ public class UserController implements UniversalController {
             userService.delete(id);
             return new ResponseEntity<>(deleteMessage, HttpStatus.OK);
         } catch (UserNotFoundException | UsernameNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
+        }
+    }
+
+    @PatchMapping("/{id}/reverseRandomize")
+    public ResponseEntity<?> reverseRandomize(@PathVariable(name = "id") int id) {
+        try {
+            boolean status = userService.reverseRandomizeTasks(id);
+            String statusReverseMessage = String.format("Randomize user tasks enabled: %b", status);
+            return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
+        } catch (UserNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();

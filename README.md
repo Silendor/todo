@@ -64,6 +64,10 @@ or
 }
 ```
 
+### Reverse user 'randomize_today_tasks' field:
+PATCH https://todo.coldwinternight.ru/api/users/{id}/reverseRandomize \
+*answer will provide current status after change*
+
 ### Edit password:
 PATCH https://todo.coldwinternight.ru/api/users/{id}/password \
 *expects json*
