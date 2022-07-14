@@ -39,6 +39,13 @@ public class TaskService implements TaskServices {
         return Task.toModel(taskEntity);
     }
 
+    public List<Task> readAllTodayTasksByUserId(int userId) throws UserNotFoundException, TaskNotFoundException {
+        userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        return taskRepository.findAllByUserIdAndTodayIsTrue(userId)
+                .stream().map(Task::toModel).collect(Collectors.toList());
+    }
+
     @Override
     @Transactional
     public void update(TaskEntity task, int id) throws TaskNotFoundException {
@@ -60,7 +67,7 @@ public class TaskService implements TaskServices {
     public List<Task> readAllByUserId(int userId) throws UserNotFoundException, TaskNotFoundException {
         userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
-        return taskRepository.findAllByUser_Id(userId).stream().map(Task::toModel).collect(Collectors.toList());
+        return taskRepository.findAllByUserId(userId).stream().map(Task::toModel).collect(Collectors.toList());
     }
 
     @Transactional

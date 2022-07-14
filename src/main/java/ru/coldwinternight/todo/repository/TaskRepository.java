@@ -11,12 +11,13 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Integer> {
 
     // All notes by user
     @Query("SELECT t FROM TaskEntity t WHERE t.user.id = :userId")
-//    Optional<TaskEntity> findAllByUser_Id(@Param("userId") int userId);
-    List<TaskEntity> findAllByUser_Id(@Param("userId") int userId);
+    List<TaskEntity> findAllByUserId(@Param("userId") int userId);
+
+    @Query("SELECT t FROM TaskEntity t WHERE t.user.id = :userId AND t.today = true")
+    List<TaskEntity> findAllByUserIdAndTodayIsTrue(int userId);
 
     // Completed
-    List<TaskEntity> findAllByUser_IdAndCompletedIsTrue(int userId);
-
+    List<TaskEntity> findAllByUserIdAndCompletedIsTrue(int userId);
     // Not completed
-    List<TaskEntity> findAllByUser_IdAndCompletedIsFalse(int userId);
+    List<TaskEntity> findAllByUserIdAndCompletedIsFalse(int userId);
 }

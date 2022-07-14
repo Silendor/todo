@@ -1,10 +1,15 @@
 package ru.coldwinternight.todo.controller;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.coldwinternight.todo.configuration.JwtConfig;
 import ru.coldwinternight.todo.entity.TaskEntity;
 import ru.coldwinternight.todo.exception.TaskNotFoundException;
 import ru.coldwinternight.todo.exception.UserNotFoundException;
@@ -14,12 +19,17 @@ import ru.coldwinternight.todo.service.TaskService;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/tasks")
 public class TaskController implements UniversalController {
     private final TaskService taskService;
+//    duplicate DI
+    private final Algorithm algorithm;
+    private final JwtConfig jwtConfig;
 
     @GetMapping
     public ResponseEntity<?> index(@RequestParam(name = "userid", required = false) Integer userId) {
@@ -53,6 +63,28 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while getting task {}: {}", id, e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/today")
+    public ResponseEntity<?> today(@RequestHeader (name = AUTHORIZATION) String authorizationHeader) {
+        log.info("Get today tasks");
+//      duplicate code from JwtTokenVerifierAuthorizationFilter
+        String prefix = jwtConfig.getTokenPrefix();
+        String token = authorizationHeader.substring(prefix.length());
+        try {
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            Integer userId = decodedJWT.getClaim("id").asInt();
+//
+            List<Task> todayTasks = taskService.readAllTodayTasksByUserId(userId);
+            return new ResponseEntity<>(todayTasks, HttpStatus.OK);
+        } catch (UserNotFoundException e) {
+            log.error("Error while getting today tasks: {}", e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            log.error("Error while getting today tasks: {}", e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
