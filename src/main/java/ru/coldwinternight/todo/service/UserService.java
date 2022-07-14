@@ -108,8 +108,8 @@ public class UserService implements UserServices, UserDetailsService {
     public boolean reverseRandomizeTasks(int id) throws UserNotFoundException {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
-        user.setRandomize_today_tasks(!user.isRandomize_today_tasks());
+        user.setRandomizeTodayTasks(!user.isRandomizeTodayTasks());
         userRepository.save(user);
-        return user.isRandomize_today_tasks();
+        return user.isRandomizeTodayTasks();
     }
 }

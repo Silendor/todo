@@ -15,8 +15,8 @@ public class User {
     private Integer id;
     private String username;
     private String email;
-    private Integer today_amount;
-    private boolean randomize_today_tasks;
+    private Integer todayAmount;
+    private boolean randomizeTodayTasks;
     private List<Task> tasks;
 
     public static User toModel(UserEntity entity) {
@@ -24,8 +24,8 @@ public class User {
                 entity.getId(),
                 entity.getUsername(),
                 entity.getEmail(),
-                entity.getToday_amount(),
-                entity.isRandomize_today_tasks(),
+                entity.getTodayAmount(),
+                entity.isRandomizeTodayTasks(),
                 entity.getTasks().stream().map(Task::toModel).collect(Collectors.toList())
         );
     }

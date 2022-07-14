@@ -28,7 +28,7 @@ public class TaskEntity extends BaseEntity{
     private String title;
 
     @Column(columnDefinition = "varchar(254) default ''")
-    private String task_body = "";
+    private String taskBody = "";
 
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean completed;

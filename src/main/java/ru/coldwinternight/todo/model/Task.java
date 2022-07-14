@@ -10,8 +10,8 @@ import ru.coldwinternight.todo.entity.TaskEntity;
 @AllArgsConstructor
 public class Task {
     private Integer id;
-    private Integer user_id;
-    private String task_body;
+    private Integer userId;
+    private String taskBody;
     private String title;
     private boolean completed;
     private boolean today;
@@ -21,7 +21,7 @@ public class Task {
         return new Task(
                 entity.getId(),
                 entity.getUser().getId(),
-                entity.getTask_body(),
+                entity.getTaskBody(),
                 entity.getTitle(),
                 entity.isCompleted(),
                 entity.isToday(),
