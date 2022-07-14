@@ -46,11 +46,13 @@ public class JwtTokenVerifierAuthorizationFilter extends OncePerRequestFilter {
                     String token = authorizationHeader.substring(prefix.length());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
-                    String email = decodedJWT.getSubject();
+                    String userName = decodedJWT.getClaim("name").asString();
+                    Integer userId = decodedJWT.getClaim("id").asInt();
+//                    String email = decodedJWT.getSubject();
                     // no roles and authorities
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     UsernamePasswordAuthenticationToken authenticationToken =
-                            new UsernamePasswordAuthenticationToken(email, null, authorities);
+                            new UsernamePasswordAuthenticationToken(userName, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
