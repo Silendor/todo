@@ -50,25 +50,35 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authentication) throws IOException, ServletException {
-        User user = (User) authentication.getPrincipal();
-        String access_token = JWT.create()
-                .withSubject(user.getUsername())
-                .withExpiresAt(Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
-                .withIssuer(request.getRequestURI())
-                // no roles
-//                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                .sign(algorithm);
-
-        response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + access_token);
-
-        UserEntity userEntity = null;
         Map<String, String> answer = new HashMap<>();
+        UserEntity userEntity = null;
+        Integer userId = null;
+        String userName = null;
+
         try {
+            User user = (User) authentication.getPrincipal();
             userEntity = userService.loadUserEntityByEmail(user.getUsername());
+
             if (userEntity.getId() != null)
-                answer.put("user_id", userEntity.getId().toString());
+                userId = userEntity.getId();
             else
                 throw new UserNotFoundException();
+
+            userName = userEntity.getUsername();
+
+            String access_token = JWT.create()
+                    .withClaim("name", userName)
+                    .withClaim("id", userId)
+//                    .withSubject(userIdString)
+                    .withExpiresAt(Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
+                    .withIssuer(request.getRequestURI())
+                    // no roles
+    //                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                    .sign(algorithm);
+
+            response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + access_token);
+
+//            answer.put("user_id", userId.toString());
             answer.put(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + access_token);
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), answer);
