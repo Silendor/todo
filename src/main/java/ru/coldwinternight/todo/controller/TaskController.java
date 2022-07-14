@@ -38,7 +38,6 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error while getting all tasks for user {}: {}", userId, e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -54,7 +53,6 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while getting task {}: {}", id, e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -79,7 +77,6 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error while creating new task for user {}: {}", userId, e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -96,7 +93,6 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while updating task {}: {}",id,  e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
@@ -113,7 +109,6 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while deleting task {}: {}", id, e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
@@ -130,7 +125,6 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while reverting 'completed' field for task {}: {}", id, e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
@@ -147,7 +141,6 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while reverting 'today' field for task {}: {}",id, e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
@@ -164,7 +157,6 @@ public class TaskController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while reverting 'archived' field for task {}: {}", id, e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
