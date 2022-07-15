@@ -95,6 +95,9 @@ GET https://todo.coldwinternight.ru/api/tasks?userid={id}
 ### Get one task by ID:
 GET https://todo.coldwinternight.ru/api/tasks/{id}
 
+### Get all today tasks for user:
+GET https://todo.coldwinternight.ru/api/tasks/today
+
 ### Create new task for user by ID:
 POST https://todo.coldwinternight.ru/api/tasks?userid={id} \
 *expects json*
