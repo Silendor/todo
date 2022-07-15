@@ -46,6 +46,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                                 HttpServletResponse response) throws AuthenticationException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        log.info("Trying to authenticate user with email: {}", email);
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(email, password);
         return authenticationManager.authenticate(authenticationToken);
@@ -62,7 +63,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         String userName = null;
 
         try {
-
             User user = (User) authentication.getPrincipal();
             userEntity = userService.loadUserEntityByEmail(user.getUsername());
 
@@ -72,6 +72,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 throw new UserNotFoundException();
 
             userName = userEntity.getUsername();
+            log.info("Authenticate user {} with id {}", userName, userId);
 
             String access_token = JWT.create()
                     .withClaim("name", userName)
@@ -90,6 +91,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), answer);
         } catch (UserNotFoundException userNotFoundException) {
+            log.error("Error while authenticate user {}", userNotFoundException.getMessage());
             response.setHeader("error", userNotFoundException.getMessage());
             response.setStatus(FORBIDDEN.value());
             answer.put("error_message", userNotFoundException.getMessage());
