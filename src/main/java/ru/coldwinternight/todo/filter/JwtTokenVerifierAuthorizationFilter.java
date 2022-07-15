@@ -60,13 +60,12 @@ public class JwtTokenVerifierAuthorizationFilter extends OncePerRequestFilter {
                     // no roles and authorities
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(userName, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
-                    log.error("Error while passing authorization filter with JWT: {}", e.getMessage());
+                    log.error("Token error: {}", e.getMessage());
                     response.setHeader("error", e.getMessage());
                     response.setStatus(FORBIDDEN.value());
                     Map<String, String> error = new HashMap<>();
