@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ru.coldwinternight.todo.configuration.UserInfo;
 import ru.coldwinternight.todo.configuration.JwtConfig;
 
 import javax.servlet.FilterChain;
@@ -28,10 +30,12 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class JwtTokenVerifierAuthorizationFilter extends OncePerRequestFilter {
     private final Algorithm algorithm;
     private final JwtConfig jwtConfig;
+    private final UserInfo userInfo;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -51,9 +55,12 @@ public class JwtTokenVerifierAuthorizationFilter extends OncePerRequestFilter {
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String userName = decodedJWT.getClaim("name").asString();
-                    Integer userId = decodedJWT.getClaim("id").asInt();
+                    // send user id to controller
+                    userInfo.setUserId(decodedJWT.getClaim("id").asInt());
                     // no roles and authorities
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(userName, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);

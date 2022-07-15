@@ -29,17 +29,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final Algorithm algorithm;
     private final JwtConfig jwtConfig;
+    private final JwtTokenVerifierAuthorizationFilter jwtTokenVerifierAuthorizationFilter;
 
     @Autowired
     public SecurityConfig(UserService userService,
                           PasswordEncoder passwordEncoder,
                           Algorithm algorithm,
-                          JwtConfig jwtConfig
-    ) {
+                          JwtConfig jwtConfig,
+                          JwtTokenVerifierAuthorizationFilter jwtTokenVerifierAuthorizationFilter) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.algorithm = algorithm;
         this.jwtConfig = jwtConfig;
+        this.jwtTokenVerifierAuthorizationFilter = jwtTokenVerifierAuthorizationFilter;
     }
 
     @Override
@@ -52,9 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JwtUsernameAndPasswordAuthenticationFilter jwtUsernameAndPasswordAuthenticationFilter =
                 new JwtUsernameAndPasswordAuthenticationFilter(authenticationManagerBean(),
                         algorithm, jwtConfig, userService);
-        JwtTokenVerifierAuthorizationFilter jwtTokenVerifierAuthorizationFilter =
-                new JwtTokenVerifierAuthorizationFilter(algorithm, jwtConfig);
-//        jwtUsernameAndPasswordAuthenticationFilter.setFilterProcessesUrl("/api/login");
+//        JwtTokenVerifierAuthorizationFilter jwtTokenVerifierAuthorizationFilter =
+//                new JwtTokenVerifierAuthorizationFilter(algorithm, jwtConfig);
+        //        jwtUsernameAndPasswordAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http
             .cors()
             .and()
