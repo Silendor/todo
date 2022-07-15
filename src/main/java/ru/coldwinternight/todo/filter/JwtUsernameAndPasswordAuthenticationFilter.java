@@ -86,7 +86,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
             response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + access_token);
 
-            answer.put("user_id", userId.toString());
+//            answer.put("user_id", userId.toString());
             answer.put(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + access_token);
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), answer);
