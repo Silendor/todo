@@ -24,22 +24,19 @@ public class TaskController implements UniversalController {
     private final UserInfo userInfo;
 
     @GetMapping
-    public ResponseEntity<?> index(@RequestParam(name = "userid", required = false) Integer userId) {
+    public ResponseEntity<?> index() {
         try {
-            log.info("Get all tasks for user {}", userId);
+            Integer userId = userInfo.getUserId();
             if (userId == null)
-                throw new IllegalStateException("userid parameter expected");
-
+                throw new UserNotFoundException();
+            log.info("Get all tasks for user {}", userId);
             List<Task> taskList = taskService.readAllByUserId(userId);
             return new ResponseEntity<>(taskList, HttpStatus.OK);
         } catch (UserNotFoundException | TaskNotFoundException e) {
-            log.error("Error while getting all tasks for user {}: {}", userId, e.getMessage());
+            log.error("Error while getting all tasks for user: {}", e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (IllegalStateException e) {
-            log.error("Error while getting all tasks for user {}: {}", userId, e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            log.error("Error while getting all tasks for user {}: {}", userId, e.getMessage());
+            log.error("Error while getting all tasks for user: {}", e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -65,6 +62,8 @@ public class TaskController implements UniversalController {
         try {
             // get user id from filter
             Integer userId = userInfo.getUserId();
+            if (userId == null)
+                throw new UserNotFoundException();
             List<Task> todayTasks = taskService.readAllTodayTasksByUserId(userId);
             return new ResponseEntity<>(todayTasks, HttpStatus.OK);
         } catch (UserNotFoundException e) {
@@ -78,25 +77,21 @@ public class TaskController implements UniversalController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestParam(name = "userid", required = false) Integer userId,
-                                    @Valid @RequestBody TaskEntity task) {
+    public ResponseEntity<?> create(@Valid @RequestBody TaskEntity task) {
         try {
-            log.info("Create new task {} for user {}:", task, userId);
+            Integer userId = userInfo.getUserId();
             if (userId == null)
-                throw new IllegalStateException("userid parameter expected");
-
+                throw new UserNotFoundException();
+            log.info("Create new task {} for userId {}:", task, userId);
             TaskEntity taskEntity = taskService.create(task, userId);
             String successfullyCreatedMessage = String.format("Task with id %d created successfully",
                     taskEntity.getId());
             return new ResponseEntity<>(successfullyCreatedMessage, HttpStatus.CREATED);
         } catch (UserNotFoundException e) {
-            log.error("Error while creating new task for user {}: {}", userId, e.getMessage());
+            log.error("Error while creating new task for user: {}", e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (IllegalStateException e) {
-            log.error("Error while creating new task for user {}: {}", userId, e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            log.error("Error while creating new task for user {}: {}", userId, e.getMessage());
+            log.error("Error while creating new task for user: {}", e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
