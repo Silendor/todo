@@ -35,7 +35,6 @@ public class UserController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while getting all users : {}", e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -51,7 +50,6 @@ public class UserController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while get {} user: {}", id, e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -67,7 +65,6 @@ public class UserController implements UniversalController {
             log.error("Error creating user {}: {}", user, e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-//            e.printStackTrace();
             log.error("Error creating user {}: {}", user, e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -85,7 +82,6 @@ public class UserController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while update user {}: {}", id, e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
@@ -117,7 +113,6 @@ public class UserController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }  catch (Exception e) {
             log.error("Error while changing password: {}", e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
@@ -134,7 +129,6 @@ public class UserController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while deleting user: {}", e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
@@ -151,7 +145,6 @@ public class UserController implements UniversalController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while reverting randomize_today_tasks: {}", e.getMessage());
-//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
