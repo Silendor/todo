@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/tasks")
-public class TaskController implements UniversalController {
+public class TaskController {
     private final TaskService taskService;
     private final UserInfo userInfo;
 
