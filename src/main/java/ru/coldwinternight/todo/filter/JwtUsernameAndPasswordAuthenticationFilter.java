@@ -58,9 +58,9 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                             FilterChain chain,
                                             Authentication authentication) throws IOException, ServletException {
         Map<String, String> answer = new HashMap<>();
-        UserEntity userEntity = null;
-        Integer userId = null;
-        String userName = null;
+        UserEntity userEntity;
+        Integer userId;
+        String userName;
 
         try {
             User user = (User) authentication.getPrincipal();
@@ -77,7 +77,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             String access_token = JWT.create()
                     .withClaim("name", userName)
                     .withClaim("id", userId)
-//                    .withSubject(userIdString)
                     .withExpiresAt(Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
                     .withIssuer(request.getRequestURI())
                     // no roles
@@ -86,7 +85,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
             response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + access_token);
 
-//            answer.put("user_id", userId.toString());
             answer.put(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + access_token);
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), answer);
