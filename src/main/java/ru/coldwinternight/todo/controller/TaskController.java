@@ -45,7 +45,13 @@ public class TaskController {
     public ResponseEntity<?> showById(@PathVariable(name = "id") int id) {
         try {
             log.info("Get one task {}", id);
+            Integer userId = userInfo.getUserId();
             Task task = taskService.read(id);
+            Integer taskUserId = task.getUserId();
+            if (!taskUserId.equals(userId)) {
+                log.warn("Attempting to read user's {} task {} by another user", taskUserId, id);
+                return new ResponseEntity<>("You're not supposed to read this task.", HttpStatus.FORBIDDEN);
+            }
             return new ResponseEntity<>(task, HttpStatus.OK);
         } catch (TaskNotFoundException e) {
             log.error("Error while getting task {}: {}", id, e.getMessage());
@@ -60,7 +66,6 @@ public class TaskController {
     public ResponseEntity<?> today() {
         log.info("Get today tasks");
         try {
-            // get user id from filter
             Integer userId = userInfo.getUserId();
             if (userId == null)
                 throw new UserNotFoundException();
@@ -100,14 +105,23 @@ public class TaskController {
     public ResponseEntity<?> update(@PathVariable(name = "id") int id, @Valid @RequestBody TaskEntity task) {
         try {
             log.info("Updating task {} with id: {}", task, id);
-            String updateMessage = "Task successfully updated";
+            Integer userId = userInfo.getUserId();
+            Task taskDB = taskService.read(id);
+            Integer taskUserId = taskDB.getUserId();
+            if (taskUserId == null)
+                throw new UserNotFoundException();
+            if (!taskUserId.equals(userId)) {
+                log.warn("Attempting to edit user's {} task {} by another user", taskUserId, id);
+                return new ResponseEntity<>("You're not supposed to edit this task.", HttpStatus.FORBIDDEN);
+            }
             taskService.update(task, id);
+            String updateMessage = "Task successfully updated";
             return new ResponseEntity<>(updateMessage, HttpStatus.OK);
-        } catch (TaskNotFoundException e) {
-            log.error("Error while updating task {}: {}",id,  e.getMessage());
+        } catch (TaskNotFoundException | UserNotFoundException e) {
+            log.error("Error while updating task {}: {}", id, e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            log.error("Error while updating task {}: {}",id,  e.getMessage());
+            log.error("Error while updating task {}: {}", id, e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
@@ -116,8 +130,15 @@ public class TaskController {
     public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
         try {
             log.info("Deleting task {}", id);
-            String deleteMessage = "Task successfully deleted";
+            Integer userId = userInfo.getUserId();
+            Task task = taskService.read(id);
+            Integer taskUserId = task.getUserId();
+            if (!taskUserId.equals(userId)) {
+                log.warn("Attempting to delete user's {} task {} by another user", taskUserId, id);
+                return new ResponseEntity<>("You're not supposed to delete this task.", HttpStatus.FORBIDDEN);
+            }
             taskService.delete(id);
+            String deleteMessage = "Task successfully deleted";
             return new ResponseEntity<>(deleteMessage, HttpStatus.OK);
         } catch (TaskNotFoundException e) {
             log.error("Error while deleting task {}: {}", id, e.getMessage());
@@ -132,6 +153,13 @@ public class TaskController {
     public ResponseEntity<?> reverseCompleted(@PathVariable(name = "id") int id) {
         try {
             log.info("Reverting 'completed' field for task {}", id);
+            Integer userId = userInfo.getUserId();
+            Task task = taskService.read(id);
+            Integer taskUserId = task.getUserId();
+            if (!taskUserId.equals(userId)) {
+                log.warn("Attempting to complete user's {} task {} by another user", taskUserId, id);
+                return new ResponseEntity<>("You're not supposed to complete this task.", HttpStatus.FORBIDDEN);
+            }
             boolean status = taskService.reverseCompleted(id);
             String statusReverseMessage = String.format("The task is completed: %b", status);
             return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
@@ -148,6 +176,13 @@ public class TaskController {
     public ResponseEntity<?> reverseToday(@PathVariable(name = "id") int id) {
         try {
             log.info("Reverting 'today' field for task {}", id);
+            Integer userId = userInfo.getUserId();
+            Task task = taskService.read(id);
+            Integer taskUserId = task.getUserId();
+            if (!taskUserId.equals(userId)) {
+                log.warn("Attempting to set 'today' for user's {} task {} by another user", taskUserId, id);
+                return new ResponseEntity<>("You're not supposed to set 'today' for this task.", HttpStatus.FORBIDDEN);
+            }
             boolean status = taskService.reverseToday(id);
             String statusReverseMessage = String.format("New status of today: %b", status);
             return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
@@ -164,6 +199,13 @@ public class TaskController {
     public ResponseEntity<?> reverseArchived(@PathVariable(name = "id") int id) {
         try {
             log.info("Reverting 'archived' field for task {}", id);
+            Integer userId = userInfo.getUserId();
+            Task task = taskService.read(id);
+            Integer taskUserId = task.getUserId();
+            if (!taskUserId.equals(userId)) {
+                log.warn("Attempting to set 'archive' for user's {} task {} by another user", taskUserId, id);
+                return new ResponseEntity<>("You're not supposed to set 'archive' for this task.", HttpStatus.FORBIDDEN);
+            }
             boolean status = taskService.reverseArchived(id);
             String statusReverseMessage = String.format("New status of archived: %b", status);
             return new ResponseEntity<>(statusReverseMessage, HttpStatus.OK);
