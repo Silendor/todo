@@ -62,6 +62,8 @@ public class UserController{
     public ResponseEntity<?> create(@Valid @RequestBody UserEntity user) {
         try {
             log.info("Create user {}", user);
+            // delete after
+            log.warn("User password:\n{}", user.getPassword());
             UserEntity userEntity = userService.create(user);
             String successfullyCreatedMessage = String.format("User with id %d created successfully", userEntity.getId());
             return new ResponseEntity<>(successfullyCreatedMessage, HttpStatus.CREATED);
