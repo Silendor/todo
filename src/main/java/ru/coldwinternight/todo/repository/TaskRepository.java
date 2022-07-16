@@ -16,8 +16,7 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Integer> {
     @Query("SELECT t FROM TaskEntity t WHERE t.user.id = :userId AND t.today = true")
     List<TaskEntity> findAllByUserIdAndTodayIsTrue(int userId);
 
-    // Completed
+    @Query("SELECT t FROM TaskEntity t WHERE t.user.id = :userId AND t.completed = true")
     List<TaskEntity> findAllByUserIdAndCompletedIsTrue(int userId);
-    // Not completed
-    List<TaskEntity> findAllByUserIdAndCompletedIsFalse(int userId);
+
 }

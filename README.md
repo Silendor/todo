@@ -91,7 +91,6 @@ https://todo.coldwinternight.ru/api/tasks \
 Authorization : Bearer $token
 ```
 
-
 ### All user tasks for user:
 GET https://todo.coldwinternight.ru/api/tasks
 
@@ -100,6 +99,9 @@ GET https://todo.coldwinternight.ru/api/tasks/{id}
 
 ### Get all today tasks for user:
 GET https://todo.coldwinternight.ru/api/tasks/today
+
+### Get all completed tasks for user:
+GET https://todo.coldwinternight.ru/api/tasks/completed
 
 ### Create new task for user:
 POST https://todo.coldwinternight.ru/api/tasks \

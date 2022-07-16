@@ -74,9 +74,26 @@ public class TaskController {
         } catch (UserNotFoundException e) {
             log.error("Error while getting today tasks: {}", e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("Error while getting today tasks: {}", e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/completed")
+    public ResponseEntity<?> completed() {
+        log.info("Get all completed tasks for user");
+        try {
+            Integer userId = userInfo.getUserId();
+            if (userId == null)
+                throw new UserNotFoundException();
+            List<Task> completedTasks = taskService.readAllCompletedTasksByUserId(userId);
+            return new ResponseEntity<>(completedTasks, HttpStatus.OK);
+        } catch (UserNotFoundException e) {
+            log.error("Error while getting completed tasks: {}", e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            log.error("Error while getting completed tasks: {}", e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

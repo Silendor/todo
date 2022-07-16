@@ -46,6 +46,13 @@ public class TaskService implements TaskServices {
                 .stream().map(Task::toModel).collect(Collectors.toList());
     }
 
+    public List<Task> readAllCompletedTasksByUserId(int userId) throws UserNotFoundException, TaskNotFoundException {
+        userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        return taskRepository.findAllByUserIdAndCompletedIsTrue(userId)
+                .stream().map(Task::toModel).collect(Collectors.toList());
+    }
+
     @Override
     @Transactional
     public void update(TaskEntity task, int id) throws TaskNotFoundException {
