@@ -1,6 +1,9 @@
 # Todo
 Test project for educational purposes
 
+Homepage: \
+https://todo.coldwinternight.ru/
+
 API address:\
 https://todo.coldwinternight.ru/api/
 
@@ -43,7 +46,7 @@ or
 ```
 
 ### ~~Edit user~~:
-PUT https://todo.coldwinternight.ru/api/users/{id} \
+PUT https://todo.coldwinternight.ru/api/users \
 *expects json*
 ```json
 {
@@ -64,11 +67,11 @@ or
 ```
 
 ### Reverse user 'randomize_today_tasks' field:
-PATCH https://todo.coldwinternight.ru/api/users/{id}/reverseRandomizeTasks \
+PATCH https://todo.coldwinternight.ru/api/users/reverseRandomizeTasks \
 *answer will provide current status after change*
 
 ### Edit password:
-PATCH https://todo.coldwinternight.ru/api/users/{id}/password \
+PATCH https://todo.coldwinternight.ru/api/users/password \
 *expects json*
 ```json
 {
@@ -78,7 +81,7 @@ PATCH https://todo.coldwinternight.ru/api/users/{id}/password \
 ```
 
 ### ~~Delete user~~:
-DELETE https://todo.coldwinternight.ru/api/users/{id} \
+DELETE https://todo.coldwinternight.ru/api/users \
 
 
 ## Section tasks:
@@ -89,8 +92,8 @@ Authorization : Bearer $token
 ```
 
 
-### All user tasks:
-GET https://todo.coldwinternight.ru/api/tasks?userid={id}
+### All user tasks for user:
+GET https://todo.coldwinternight.ru/api/tasks
 
 ### Get one task by ID:
 GET https://todo.coldwinternight.ru/api/tasks/{id}
@@ -98,8 +101,8 @@ GET https://todo.coldwinternight.ru/api/tasks/{id}
 ### Get all today tasks for user:
 GET https://todo.coldwinternight.ru/api/tasks/today
 
-### Create new task for user by ID:
-POST https://todo.coldwinternight.ru/api/tasks?userid={id} \
+### Create new task for user:
+POST https://todo.coldwinternight.ru/api/tasks \
 *expects json*
 ```json
 {
@@ -132,7 +135,6 @@ PUT https://todo.coldwinternight.ru/api/tasks/{id}
 *expects json*
 ```json
 {
-  "user_id": 2,
   "title": "test title",
   "task_body": "test todo",
   "completed": false,
@@ -142,7 +144,6 @@ PUT https://todo.coldwinternight.ru/api/tasks/{id}
 or
 ```json
 {
-  "user_id": 2,
   "title": "test title",
   "task_body": "test todo"
 }
