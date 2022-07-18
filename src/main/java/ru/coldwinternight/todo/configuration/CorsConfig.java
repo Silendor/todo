@@ -16,7 +16,7 @@ public class CorsConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
         configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000", "http://127.0.0.1:3000",
-                "https://todo.coldwinternight.ru"));
+                "https://todo.coldwinternight.ru", "https://shmiterling.github.io"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "PATCH", "DELETE"));
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
