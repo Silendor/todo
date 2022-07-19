@@ -1,5 +1,6 @@
 package ru.coldwinternight.todo.service;
 
+import ru.coldwinternight.todo.exception.EmailCannotBeNullException;
 import ru.coldwinternight.todo.exception.UserAlreadyExistException;
 import ru.coldwinternight.todo.entity.UserEntity;
 import ru.coldwinternight.todo.exception.UserNotFoundException;
@@ -33,7 +34,7 @@ public interface UserServices {
      * @param user - user with new data
      * @param id - id of the user to be updated
      */
-    void update(UserEntity user, int id) throws UserNotFoundException;
+    void update(UserEntity user, int id) throws UserNotFoundException, EmailCannotBeNullException;
 
     /**
      * Deletes user by id

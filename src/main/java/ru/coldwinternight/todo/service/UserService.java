@@ -8,11 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.coldwinternight.todo.exception.IncorrectPasswordException;
-import ru.coldwinternight.todo.exception.InvalidDataAccessApiUsageTasksFromUsersApiException;
-import ru.coldwinternight.todo.exception.UserAlreadyExistException;
+import ru.coldwinternight.todo.exception.*;
 import ru.coldwinternight.todo.entity.UserEntity;
-import ru.coldwinternight.todo.exception.UserNotFoundException;
 import ru.coldwinternight.todo.model.User;
 import ru.coldwinternight.todo.repository.UserRepository;
 
@@ -74,14 +71,15 @@ public class UserService implements UserServices, UserDetailsService {
 
     @Override
     @Transactional
-    public void update(UserEntity user, int id) throws UserNotFoundException {
+    public void update(UserEntity user, int id) throws UserNotFoundException, EmailCannotBeNullException {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
         if (user.getTasks() != null)
             throw new InvalidDataAccessApiUsageTasksFromUsersApiException();
+        if (user.getEmail() == null)
+            throw new EmailCannotBeNullException("Please, send Email field.");
         userEntity.setUsername(user.getUsername());
         userEntity.setEmail(user.getEmail());
-        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntity.setRandomizeTodayTasks(user.isRandomizeTodayTasks());
         userEntity.setTodayAmount(user.getTodayAmount());
         userRepository.save(userEntity);

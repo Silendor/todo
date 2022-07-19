@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import ru.coldwinternight.todo.configuration.UserInfo;
+import ru.coldwinternight.todo.exception.EmailCannotBeNullException;
 import ru.coldwinternight.todo.exception.IncorrectPasswordException;
 import ru.coldwinternight.todo.exception.UserAlreadyExistException;
 import ru.coldwinternight.todo.entity.UserEntity;

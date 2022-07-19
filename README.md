@@ -52,15 +52,15 @@ or
 
 ### Edit user:
 PUT https://todo.coldwinternight.ru/api/users \
-Email and Password fields are strongly required. \
-All optional fields will take default values if not specified.
+Email field are strongly required. \
+All optional fields will take default values if not specified. \
+Password field can be changed via special request.
 
 *expects json*
 ```json
 {
   "username": "guideTheNPC",
   "email": "guide@mail.com",
-  "password": "wallofflesh",
   "todayAmount": 3,
   "randomizeTodayTasks": false
 }
