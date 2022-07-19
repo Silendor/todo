@@ -10,6 +10,8 @@ https://todo.coldwinternight.ru/api/
 ## Section login:
 https://todo.coldwinternight.ru/api/login
 
+Email and Password field are strongly required.
+
 POST https://todo.coldwinternight.ru/api/login \
 *expects application/x-www-form-urlencoded*
 ```
@@ -27,6 +29,9 @@ Authorization : Bearer $token
 
 ### Create new user:
 POST https://todo.coldwinternight.ru/api/users \
+Email and Password field are strongly required.
+
+
 *expects json*
 ```json
 {
@@ -47,6 +52,9 @@ or
 
 ### Edit user:
 PUT https://todo.coldwinternight.ru/api/users \
+Email and Password fields are strongly required. \
+All optional fields will take default values if not specified.
+
 *expects json*
 ```json
 {
@@ -97,6 +105,9 @@ GET https://todo.coldwinternight.ru/api/tasks/completed
 
 ### Create new task for user:
 POST https://todo.coldwinternight.ru/api/tasks \
+Title field are strongly required. \
+All optional fields will take default values if not specified.
+
 *expects json*
 ```json
 {
@@ -125,7 +136,10 @@ PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseArchived \
 *answer will provide current status after change*
 
 ### Edit task:
-PUT https://todo.coldwinternight.ru/api/tasks/{id}
+PUT https://todo.coldwinternight.ru/api/tasks/{id} \
+Title field are strongly required. \
+All optional fields will take default values if not specified.
+
 *expects json*
 ```json
 {
