@@ -97,6 +97,14 @@ public class UserService implements UserServices, UserDetailsService {
         userRepository.updatePassword(passwordEncoder.encode(newPassword), id);
     }
 
+    @Transactional
+    public void updateUsername(int id, String newUsername) throws UserNotFoundException {
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+        userEntity.setUsername(newUsername);
+        userRepository.save(userEntity);
+    }
+
     @Override
     @Transactional
     public void delete(int id) throws UserNotFoundException {

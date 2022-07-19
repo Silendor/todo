@@ -80,6 +80,15 @@ PATCH https://todo.coldwinternight.ru/api/users/password \
 }
 ```
 
+### Edit username:
+PATCH https://todo.coldwinternight.ru/api/users/username \
+*expects json*
+```json
+{
+  "username": "new username"
+}
+```
+
 ### Delete user:
 DELETE https://todo.coldwinternight.ru/api/users \
 

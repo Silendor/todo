@@ -99,7 +99,7 @@ public class UserController{
     @PatchMapping("/password")
     public ResponseEntity<?> updatePassword(@RequestBody Map<String, String> passwords) {
         String oldPassword, newPassword;
-        String updatePasswordMessage = "Password was successfully updated.";
+        String updatePasswordMessage = "Password was updated successfully.";
         try {
             Integer id = userInfo.getUserId();
             log.info("Trying to change user's password. UserId: {}", id);
@@ -127,6 +127,37 @@ public class UserController{
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }  catch (Exception e) {
             log.error("Error while changing password: {}", e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
+        }
+    }
+
+    @PatchMapping("/username")
+    public ResponseEntity<?> updateUsername(@RequestBody Map<String, String> username) {
+        String newUsername, oldUsername;
+        String updateUsernameMessage = "Username was updated successfully.";
+        try {
+            Integer id = userInfo.getUserId();
+            if (id == null)
+                throw new UserNotFoundException();
+            log.info("Trying to change user's password. UserId: {}", id);
+            newUsername = username.get("username");
+            User user = userService.read(id);
+            oldUsername = user.getUsername();
+            if (oldUsername.equals(newUsername))
+                return new ResponseEntity<>("These names are equal.", HttpStatus.NOT_MODIFIED);
+
+            userService.updateUsername(id, newUsername);
+            log.info("Username has changed for user {}. New name: {}", id, newUsername);
+            return new ResponseEntity<>(updateUsernameMessage, HttpStatus.OK);
+        } catch (NullPointerException e) {
+            log.error("Error while changing username, bad credentials: {}", e.getMessage());
+            String mapErrorMessage = "You should to specify json with next key: username";
+            return new ResponseEntity<>(mapErrorMessage, HttpStatus.BAD_REQUEST);
+        } catch (UserNotFoundException e) {
+            log.error("Error while changing username: {}", e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }  catch (Exception e) {
+            log.error("Error while changing username: {}", e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
