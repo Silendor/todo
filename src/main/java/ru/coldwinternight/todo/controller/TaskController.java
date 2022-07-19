@@ -166,6 +166,23 @@ public class TaskController {
         }
     }
 
+    @DeleteMapping("/today")
+    public ResponseEntity<?> deleteToday() {
+        try {
+            log.info("Deleting all today tasks");
+            Integer userId = userInfo.getUserId();
+            taskService.deleteToday(userId);
+            String deleteMessage = "All today's tasks have been successfully deleted.";
+            return new ResponseEntity<>(deleteMessage, HttpStatus.OK);
+        } catch (TaskNotFoundException e) {
+            log.error("Error while deleting all today tasks: {}", e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            log.error("Error while deleting all today tasks: {}", e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
+        }
+    }
+
     @PatchMapping("/{id}/reverseCompleted")
     public ResponseEntity<?> reverseCompleted(@PathVariable(name = "id") int id) {
         try {

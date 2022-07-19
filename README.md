@@ -160,3 +160,6 @@ or
 
 ### Delete task:
 DELETE https://todo.coldwinternight.ru/api/tasks/{id}
+
+### Delete all today tasks:
+DELETE https://todo.coldwinternight.ru/api/tasks/today

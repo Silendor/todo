@@ -74,6 +74,15 @@ public class TaskService implements TaskServices {
         taskRepository.deleteById(id);
     }
 
+    @Transactional
+    public void deleteToday(int userId) throws UserNotFoundException, TaskNotFoundException {
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        if (!taskRepository.existsByUserAndTodayIsTrue(userEntity))
+            throw new TaskNotFoundException("User must have at least one 'today' task.");
+        taskRepository.deleteAllByTodayByUserId(userId);
+    }
+
     @Override
     public List<Task> readAllByUserId(int userId) throws UserNotFoundException, TaskNotFoundException {
         userRepository.findById(userId)
