@@ -80,7 +80,7 @@ PATCH https://todo.coldwinternight.ru/api/users/password \
 }
 ```
 
-### ~~Delete user~~:
+### Delete user:
 DELETE https://todo.coldwinternight.ru/api/users \
 
 
@@ -158,5 +158,5 @@ or
 }
 ```
 
-### ~~Delete task~~:
+### Delete task:
 DELETE https://todo.coldwinternight.ru/api/tasks/{id}
