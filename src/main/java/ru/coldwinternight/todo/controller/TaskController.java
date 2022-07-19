@@ -163,9 +163,9 @@ public class TaskController {
             if (oldTitle.equals(newTitle) && oldTaskBody.equals(newTaskBody))
                 return new ResponseEntity<>("These titles and taskBodies are equal.", HttpStatus.NOT_MODIFIED);
             if (newTitle == null || newTitle.isEmpty())
-                return new ResponseEntity<>("Title shouldn't be null or empty", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Title can't be null or empty", HttpStatus.BAD_REQUEST);
             if (newTaskBody == null)
-                return new ResponseEntity<>("Task body shouldn't be null", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Task body can't be null", HttpStatus.BAD_REQUEST);
             taskService.updateTitleAndTaskBody(id, newTitle, newTaskBody);
             log.info("Title and taskBody has changed for user {}. New title: {}, new taskBody: {}", userId, newTitle, newTaskBody);
             return new ResponseEntity<>(updateTitleMessage, HttpStatus.OK);

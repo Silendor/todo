@@ -88,6 +88,7 @@ PATCH https://todo.coldwinternight.ru/api/users/username \
   "username": "new username"
 }
 ```
+Username can be empty string.
 
 ### Delete user:
 DELETE https://todo.coldwinternight.ru/api/users \

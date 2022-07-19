@@ -145,7 +145,8 @@ public class UserController{
             oldUsername = user.getUsername();
             if (oldUsername.equals(newUsername))
                 return new ResponseEntity<>("These names are equal.", HttpStatus.NOT_MODIFIED);
-
+            if (newUsername == null)
+                return new ResponseEntity<>("Username can't be null", HttpStatus.BAD_REQUEST);
             userService.updateUsername(id, newUsername);
             log.info("Username has changed for user {}. New name: {}", id, newUsername);
             return new ResponseEntity<>(updateUsernameMessage, HttpStatus.OK);
