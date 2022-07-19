@@ -84,7 +84,6 @@ public class UserService implements UserServices, UserDetailsService {
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntity.setRandomizeTodayTasks(user.isRandomizeTodayTasks());
         userEntity.setTodayAmount(user.getTodayAmount());
-//        user.setId(id);
         userRepository.save(userEntity);
     }
 

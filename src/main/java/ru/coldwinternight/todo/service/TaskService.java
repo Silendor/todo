@@ -58,13 +58,11 @@ public class TaskService implements TaskServices {
     public void update(TaskEntity task, int id) throws TaskNotFoundException {
         TaskEntity taskEntity = taskRepository.findById(id)
                 .orElseThrow(TaskNotFoundException::new);
-//        task.setId(id);
         taskEntity.setTitle(task.getTitle());
         taskEntity.setTaskBody(task.getTaskBody());
         taskEntity.setCompleted(task.isCompleted());
         taskEntity.setToday(task.isToday());
         taskEntity.setArchived(task.isArchived());
-//        taskEntity.setUser(task.getUser());
         taskRepository.save(taskEntity);
     }
 
