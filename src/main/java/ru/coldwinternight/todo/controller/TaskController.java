@@ -10,10 +10,12 @@ import ru.coldwinternight.todo.entity.TaskEntity;
 import ru.coldwinternight.todo.exception.TaskNotFoundException;
 import ru.coldwinternight.todo.exception.UserNotFoundException;
 import ru.coldwinternight.todo.model.Task;
+import ru.coldwinternight.todo.model.User;
 import ru.coldwinternight.todo.service.TaskService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -139,6 +141,43 @@ public class TaskController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while updating task {}: {}", id, e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
+        }
+    }
+
+    @PatchMapping("/{id}/titleAndBody")
+    public ResponseEntity<?> updateTitleAndTaskBody(@PathVariable(name = "id") int id,
+                                                    @RequestBody Map<String, String> taskTitleAndBody) {
+        String newTitle, oldTitle, newTaskBody, oldTaskBody;
+        String updateTitleMessage = "Title and task body was updated successfully.";
+        try {
+            Integer userId = userInfo.getUserId();
+            if (userId == null)
+                throw new UserNotFoundException();
+            log.info("Trying to change user's password. UserId: {}", userId);
+            newTitle = taskTitleAndBody.get("title");
+            newTaskBody = taskTitleAndBody.get("task_body");
+            Task task = taskService.read(id);
+            oldTitle = task.getTitle();
+            oldTaskBody = task.getTaskBody();
+            if (oldTitle.equals(newTitle) && oldTaskBody.equals(newTaskBody))
+                return new ResponseEntity<>("These titles and taskBodies are equal.", HttpStatus.NOT_MODIFIED);
+            if (newTitle == null || newTitle.isEmpty())
+                return new ResponseEntity<>("Title shouldn't be null or empty", HttpStatus.BAD_REQUEST);
+            if (newTaskBody == null)
+                return new ResponseEntity<>("Task body shouldn't be null", HttpStatus.BAD_REQUEST);
+            taskService.updateTitleAndTaskBody(id, newTitle, newTaskBody);
+            log.info("Title and taskBody has changed for user {}. New title: {}, new taskBody: {}", userId, newTitle, newTaskBody);
+            return new ResponseEntity<>(updateTitleMessage, HttpStatus.OK);
+        } catch (NullPointerException e) {
+            log.error("Error while changing title and taskBody, bad credentials: {}", e.getMessage());
+            String mapErrorMessage = "You should to specify json with next keys: title, task_body";
+            return new ResponseEntity<>(mapErrorMessage, HttpStatus.BAD_REQUEST);
+        } catch (UserNotFoundException e) {
+            log.error("Error while changing title and taskBody: {}", e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }  catch (Exception e) {
+            log.error("Error while changing title and taskBody: {}", e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }

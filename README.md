@@ -167,6 +167,17 @@ or
 }
 ```
 
+### Edit title and task body:
+PATCH https://todo.coldwinternight.ru/api/tasks/{id}/titleAndBody \
+*expects json*
+```json
+{
+  "title": "new title",
+  "task_body": "test todo"
+}
+```
+Task body can be empty string.
+
 ### Delete task:
 DELETE https://todo.coldwinternight.ru/api/tasks/{id}
 

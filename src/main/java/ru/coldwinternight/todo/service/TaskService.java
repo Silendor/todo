@@ -66,6 +66,15 @@ public class TaskService implements TaskServices {
         taskRepository.save(taskEntity);
     }
 
+    @Transactional
+    public void updateTitleAndTaskBody(int id, String newTitle, String newTaskBody) throws TaskNotFoundException {
+        TaskEntity taskEntity = taskRepository.findById(id)
+                .orElseThrow(TaskNotFoundException::new);
+        taskEntity.setTitle(newTitle);
+        taskEntity.setTaskBody(newTaskBody);
+        taskRepository.save(taskEntity);
+    }
+
     @Override
     @Transactional
     public void delete(int id) throws TaskNotFoundException {
