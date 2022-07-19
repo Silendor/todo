@@ -56,10 +56,16 @@ public class TaskService implements TaskServices {
     @Override
     @Transactional
     public void update(TaskEntity task, int id) throws TaskNotFoundException {
-        taskRepository.findById(id)
+        TaskEntity taskEntity = taskRepository.findById(id)
                 .orElseThrow(TaskNotFoundException::new);
-        task.setId(id);
-        taskRepository.save(task);
+//        task.setId(id);
+        taskEntity.setTitle(task.getTitle());
+        taskEntity.setTaskBody(task.getTaskBody());
+        taskEntity.setCompleted(task.isCompleted());
+        taskEntity.setToday(task.isToday());
+        taskEntity.setArchived(task.isArchived());
+//        taskEntity.setUser(task.getUser());
+        taskRepository.save(taskEntity);
     }
 
     @Override

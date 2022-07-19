@@ -45,24 +45,16 @@ or
 }
 ```
 
-### ~~Edit user~~:
+### Edit user:
 PUT https://todo.coldwinternight.ru/api/users \
 *expects json*
 ```json
 {
-  "username": "Matt2",
-  "email": "mattuser2@mail.com",
-  "password": "123mattpass2",
-  "today_amount": 3,
-  "randomize_today_tasks": false
-}
-```
-or
-```json
-{
-  "username": "Matt2",
-  "email": "mattuser2@mail.com",
-  "password": "123mattpass2"
+  "username": "guideTheNPC",
+  "email": "guide@mail.com",
+  "password": "wallofflesh",
+  "todayAmount": 3,
+  "randomizeTodayTasks": false
 }
 ```
 
@@ -132,15 +124,16 @@ PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseToday \
 PATCH https://todo.coldwinternight.ru/api/tasks/{id}/reverseArchived \
 *answer will provide current status after change*
 
-### ~~Edit task~~:
+### Edit task:
 PUT https://todo.coldwinternight.ru/api/tasks/{id}
 *expects json*
 ```json
 {
-  "title": "test title",
-  "task_body": "test todo",
+  "title": "title test change",
+  "taskBody": "changed task body",
   "completed": false,
-  "today": false
+  "today": false,
+  "archived": false
 }
 ```
 or

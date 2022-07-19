@@ -75,13 +75,17 @@ public class UserService implements UserServices, UserDetailsService {
     @Override
     @Transactional
     public void update(UserEntity user, int id) throws UserNotFoundException {
-        userRepository.findById(id)
+        UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
         if (user.getTasks() != null)
             throw new InvalidDataAccessApiUsageTasksFromUsersApiException();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setId(id);
-        userRepository.save(user);
+        userEntity.setUsername(user.getUsername());
+        userEntity.setEmail(user.getEmail());
+        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        userEntity.setRandomizeTodayTasks(user.isRandomizeTodayTasks());
+        userEntity.setTodayAmount(user.getTodayAmount());
+//        user.setId(id);
+        userRepository.save(userEntity);
     }
 
     @Transactional
