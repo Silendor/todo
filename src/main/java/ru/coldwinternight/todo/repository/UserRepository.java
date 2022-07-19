@@ -23,4 +23,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
 //    Optional<UserEntity> findFirstByUsername(String username);
     UserEntity findFirstByUsername(String username);
+
+    @Modifying
+    @Query("DELETE FROM UserEntity u WHERE u.id = :id")
+    void deleteById(int id);
 }
