@@ -1,6 +1,7 @@
 package ru.coldwinternight.todo.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import ru.coldwinternight.todo.entity.UserEntity;
@@ -8,8 +9,7 @@ import ru.coldwinternight.todo.entity.UserEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class User {
     private Integer id;
